@@ -1,16 +1,11 @@
-<div class="flex items-center gap-2">
 
 
-    <!-- Slider -->
-    <label class="relative inline-block w-14 h-8">
-      <input
-        type="checkbox"
-        class="hidden"
-        (change)="toggleDarkMode()"
-        [checked]="isDarkMode"
-      />
-      <span
-        class="slider cursor-pointer block w-full h-full bg-gray-300 dark:bg-gray-700 rounded-full before:absolute before:top-1 before:left-1 before:w-6 before:h-6 before:bg-white before:rounded-full before:transition-transform before:duration-300 dark:before:translate-x-6"
-      ></span>
+  <div class="flex items-center space-x-4">
+    <label for="toggle" class="relative inline-block w-12 h-6 cursor-pointer">
+      <input type="checkbox" id="toggle" class="peer sr-only" (change)="toggleDarkMode()" [checked]="isDarkMode">
+      <div class="w-full h-full bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+      <div
+        class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-6 transition-transform">
+      </div>
     </label>
   </div>

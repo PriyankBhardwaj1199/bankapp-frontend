@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
+import { RegisterComponent } from "./components/register/register.component";
 import { RouterOutlet } from '@angular/router';
-import { ThemeService } from './services/theme.service';
-import { FormsModule } from '@angular/forms';
-import { SliderComponent } from "./components/slider/slider.component";
-import { HeroComponent } from "./components/hero/hero.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HeroComponent],
+  imports: [ RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

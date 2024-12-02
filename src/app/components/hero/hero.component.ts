@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { SliderComponent } from "../slider/slider.component";
+import { HeaderComponent } from "../header/header.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [SliderComponent],
+  imports: [HeaderComponent,RouterLink],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css'
 })

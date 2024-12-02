@@ -1,0 +1,197 @@
+<!--
+  This example requires updating your template:
+
+  ```
+  <html class="h-full bg-white">
+  <body class="h-full">
+  ```
+-->
+<app-header></app-header>
+<div class="flex min-h-full flex-col justify-items-start px-6 py-12 lg:px-8 dark:bg-slate-800">
+    <!-- Top-left gradient -->
+<div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+    <div
+      class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+      style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
+    ></div>
+  </div>
+  
+  <!-- Top-right gradient -->
+  <div class="absolute inset-x-0 -top-40 right-0 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+    <div
+      class="relative right-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:right-[calc(50%-30rem)] sm:w-[72.1875rem]"
+      style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
+    ></div>
+  </div>
+  
+  <!-- Bottom-left gradient -->
+  <div class="absolute inset-x-0 bottom-0 left-0 -z-10 transform-gpu overflow-hidden blur-3xl" aria-hidden="true">
+    <div
+      class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+      style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
+    ></div>
+  </div>
+  
+  <!-- Bottom-right gradient -->
+  <div class="absolute inset-x-0 bottom-0 right-0 -z-10 transform-gpu overflow-hidden blur-3xl" aria-hidden="true">
+    <div
+      class="relative right-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:right-[calc(50%-30rem)] sm:w-[72.1875rem]"
+      style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
+    ></div>
+  </div>
+  
+      
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <!-- <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company"> -->
+      <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">Your Journey to Financial Freedom Starts Here!</h2>
+    </div>
+  
+    <div class="mt-10 w-full">
+        <form class="flex flex-wrap gap-4 justify-start p-4 shadow-2xl" action="#" method="POST">
+            
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+              <label for="firstName" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">First Name</label>
+              <div class="mt-2">
+                <input type="text" name="firstName" id="firstName" placeholder="eg. Mark" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              </div>
+            </div>
+          
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+              <label for="middleName" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Middle Name</label>
+              <div class="mt-2">
+                <input type="text" name="middleName" id="middleName" placeholder="eg. Alexander" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              </div>
+            </div>
+          
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+              <label for="lastName" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Last Name</label>
+              <div class="mt-2">
+                <input type="text" name="lastName" id="lastName" placeholder="eg. Harrison" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              </div>
+            </div>
+          
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+              <label for="gender" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Gender</label>
+              <div class="mt-2">
+                <select id="gender" name="gender" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+            </div>
+          
+           
+            <div class="flex-1 min-w-full sm:min-w-[640px]">
+              <label for="addressLine1" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Address Line 1</label>
+              <div class="mt-2">
+                <input type="text" name="addressLine1" id="addressLine1" placeholder="House Number/ Flat Number" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              </div>
+            </div>
+          
+            <div class="flex-1 min-w-full sm:min-w-[640px]">
+              <label for="addressLine2" class="block text-sm font-medium text-gray-900 dark:text-white">Address Line 2</label>
+              <div class="mt-2">
+                <input type="text" name="addressLine2" id="addressLine2" placeholder="Locality/ Landmark" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              </div>
+            </div>
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="city" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">City</label>
+                <div class="mt-2">
+                  <input type="text" name="city" id="city" placeholder="eg. Noida" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="pinCode" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Pin Code</label>
+                <div class="mt-2">
+                  <input type="number" name="pinCode" id="pinCode" placeholder="eg. 245064" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="stateOfOrigin" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">State</label>
+                <div class="mt-2">
+                    <select id="stateOfOrigin" name="stateOfOrigin" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="country" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Country</label>
+                <div class="mt-2">
+                    <select id="country" name="country" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="email" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Email</label>
+                <div class="mt-2">
+                  <input type="email" name="email" id="email" placeholder="eg. markharrison@gmail.com" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="phoneNumber" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Phone Number</label>
+                <div class="mt-2">
+                  <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Enter your primary phone number" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="alternativePhoneNumber" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Alternative Phone Number</label>
+                <div class="mt-2">
+                  <input type="tel" name="alternativePhoneNumber" id="alternativePhoneNumber" placeholder="Enter your backup phone number" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="role" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Role</label>
+                <div class="mt-2">
+                    <select id="role" name="role" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="USER">USER</option>
+                        <option value="ADMIN">ADMIN</option>
+                      </select>
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="password" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Password</label>
+                <div class="mt-2">
+                  <input [type]="showPassword ? 'text' : 'password'" name="password" id="password" placeholder="Choose a strong password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+            </div>
+
+            
+
+            <div class="flex-1 min-w-full sm:min-w-[320px]">
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Confirm Password</label>
+                <div class="mt-2">
+                  <input [type]="showPassword ? 'text' : 'password'" name="confirmPassword" id="confirmPassword" placeholder="Confirm your password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+            </div>
+
+            <div class="flex-none min-w-full sm:min-w-[32px]">
+                <div class="flex mt-4 items-center ps-1 rounded">
+                    <input id="passwordCheckbox" type="checkbox" value="" name="passwordCheckbox" (change)="togglePassword()" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700">
+                    <label for="passwordCheckbox" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ showPassword ? 'Hide Password' : 'Show Password' }}</label>
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-full text-center">
+                <button type="submit" class="rounded-md bg-indigo-600 dark:bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 dark:hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
+            </div>
+
+          </form>
+          
+          
+
+          
+    </div>
+  </div>
+  
