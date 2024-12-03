@@ -24,7 +24,7 @@ export class UpdatePasswordComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.updateForm = this.formBuilder.group({
-      accountNumber: ['', [Validators.required,Validators.pattern(/^[A-Za-z]{2}\d{10}$/)]],
+      accountNumber: ['', [Validators.required,this.accountNumberValidator,Validators.minLength(12),Validators.maxLength(12)]],
       oldPassword: [
         '',
         [
@@ -54,9 +54,7 @@ export class UpdatePasswordComponent {
   
   ngOnInit(): void {
     // Subscribe to value changes on the password field
-    this.updateForm.get('oldPassword')?.valueChanges.subscribe(() => {
-      this.logPasswordErrors();
-    });
+    
   }
 
   passwordValidator(control: AbstractControl): ValidationErrors | null {
@@ -79,21 +77,36 @@ export class UpdatePasswordComponent {
       errors['noSpecialChar'] = 'Password must contain at least one special character';
     }
 
+    // Rule 4: At least one lowercase letter
+    if (!/[a-z]/.test(value)) {
+      errors['noLowerCase'] = 'Password must contain at least one lowercase letter';
+    }
+
+    // Rule 1: At least one uppercase letter
+    if (!/[A-Z]/.test(value)) {
+      errors['noUpperCase'] = 'Password must contain at least one uppercase letter';
+    }
+
     return Object.keys(errors).length ? errors : null;
   }
 
-  logPasswordErrors(): void {
-    const passwordControl = this.updateForm.get('oldPassword');
-    if (passwordControl?.errors) {
-      console.log('Password errors:', passwordControl.errors);
+  accountNumberValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value || '';
 
-      for (const errorKey in passwordControl.errors) {
-        if (passwordControl.errors.hasOwnProperty(errorKey)) {
-          console.log(`Rule failed: ${errorKey}`);
-        }
-      }
+    const errors: ValidationErrors = {};
+    
+    // Rule 1: First 2 characters should be letters
+    if (!/^[A-Za-z]{2}/.test(value)) {
+      errors['noLetterStarting'] = 'First two letters of the account number should be alphabets';
     }
 
-    
+    // Rule 2: 10 digits
+    if (!/\d{10}$/.test(value)) {
+      errors['noTenDigit'] = 'Account number must contain 10 digits';
+    }
+
+
+    return Object.keys(errors).length ? errors : null;
   }
+
 }
