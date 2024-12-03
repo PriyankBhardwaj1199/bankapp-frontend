@@ -160,20 +160,91 @@
                 </div>
             </div>
 
-            <div class="flex-1 min-w-full sm:min-w-[320px]">
+           
+              <div class="relative flex-1 min-w-full sm:min-w-[320px]">
                 <label for="password" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Password</label>
                 <div class="mt-2">
-                  <input [type]="showPassword ? 'text' : 'password'" name="password" id="password" placeholder="Choose a strong password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <input [type]="showPassword ? 'text' : 'password'" name="password" id="password" placeholder="Choose a strong password" (focus)="showAlert = true"
+                  (blur)="showAlert = false" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
-            </div>
+                  <div
+                *ngIf="showAlert"
+                class="absolute left-0 -top-[250%] mt-1 w-full p-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-700 dark:text-blue-400 shadow-md flex items-start"
+                role="alert"
+              >
+                <svg
+                  class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+                  />
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                  <span class="font-medium"
+                    >Ensure that these requirements are met:</span
+                  >
+                  <ul class="mt-1.5 list-disc list-inside">
+                    <li>At least 8 characters</li>
+                    <li>At max 16 characters</li>
+                    <li>At least one lowercase character</li>
+                    <li>At least one uppercase character</li>
+                    <li>At least one number</li>
+                    <li>At least one special character</li>
+                  </ul>
+                </div>
+              </div>
+              </div>
+              
+        
+
 
             
 
-            <div class="flex-1 min-w-full sm:min-w-[320px]">
+            
+
+            <div class="relative flex-1 min-w-full sm:min-w-[320px]">
                 <label for="confirmPassword" class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500">Confirm Password</label>
                 <div class="mt-2">
-                  <input [type]="showPassword ? 'text' : 'password'" name="confirmPassword" id="confirmPassword" placeholder="Confirm your password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <input [type]="showPassword ? 'text' : 'password'" name="confirmPassword" id="confirmPassword" placeholder="Confirm your password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" (focus)="showAlertConfirm = true"
+                  (blur)="showAlertConfirm = false">
                 </div>
+
+                <div
+                *ngIf="showAlertConfirm"
+                class="absolute left-0 -top-[250%] mt-1 w-full p-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-700 dark:text-blue-400 shadow-md flex items-start"
+                role="alert"
+              >
+                <svg
+                  class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+                  />
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                  <span class="font-medium"
+                    >Ensure that these requirements are met:</span
+                  >
+                  <ul class="mt-1.5 list-disc list-inside">
+                    <li>At least 8 characters</li>
+                    <li>At max 16 characters</li>
+                    <li>At least one lowercase character</li>
+                    <li>At least one uppercase character</li>
+                    <li>At least one number</li>
+                    <li>At least one special character</li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
             <div class="flex-none min-w-full sm:min-w-[32px]">
