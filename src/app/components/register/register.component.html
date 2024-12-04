@@ -151,7 +151,7 @@
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="firstName"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >First Name</label
         >
         <div class="mt-2">
@@ -165,12 +165,28 @@
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
+        <div
+          *ngIf="
+            registerForm?.get('firstName')?.invalid &&
+            (registerForm?.get('firstName')?.dirty ||
+              registerForm?.get('firstName')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('firstName')?.errors?.['required']"
+            class="font-medium"
+          >
+            * First Name is required.
+          </div>
+        </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="middleName"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white"
           >Middle Name</label
         >
         <div class="mt-2">
@@ -180,16 +196,16 @@
             id="middleName"
             formControlName="middleName"
             placeholder="eg. Alexander"
-            required
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
+        
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="lastName"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Last Name</label
         >
         <div class="mt-2">
@@ -203,12 +219,28 @@
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
+        <div
+          *ngIf="
+            registerForm?.get('lastName')?.invalid &&
+            (registerForm?.get('lastName')?.dirty ||
+              registerForm?.get('lastName')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('lastName')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Last Name is required.
+          </div>
+        </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="gender"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Gender</label
         >
         <div class="mt-2">
@@ -224,12 +256,28 @@
             <option value="Female">Female</option>
           </select>
         </div>
+        <div
+          *ngIf="
+            registerForm?.get('gender')?.invalid &&
+            (registerForm?.get('gender')?.dirty ||
+              registerForm?.get('gender')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('gender')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Gender is required.
+          </div>
+        </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[640px]">
         <label
           for="addressLine1"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Address Line 1</label
         >
         <div class="mt-2">
@@ -242,6 +290,22 @@
             required
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
+        </div>
+        <div
+          *ngIf="
+            registerForm?.get('addressLine1')?.invalid &&
+            (registerForm?.get('addressLine1')?.dirty ||
+              registerForm?.get('addressLine1')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('addressLine1')?.errors?.['required']"
+            class="font-medium"
+          >
+            * This is a required field.
+          </div>
         </div>
       </div>
 
@@ -266,7 +330,7 @@
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="city"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >City</label
         >
         <div class="mt-2">
@@ -280,31 +344,72 @@
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
+
+        <div
+          *ngIf="
+            registerForm?.get('city')?.invalid &&
+            (registerForm?.get('city')?.dirty ||
+              registerForm?.get('city')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('city')?.errors?.['required']"
+            class="font-medium"
+          >
+            * City is required.
+          </div>
+        </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="pinCode"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Pin Code</label
         >
         <div class="mt-2">
           <input
-            type="number"
+            type="text"
             name="pinCode"
             id="pinCode"
             formControlName="pinCode"
             placeholder="eg. 245064"
+            (keypress)="allowOnlyNumbers($event)"
             required
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
+        </div>
+
+        <div
+          *ngIf="
+            registerForm?.get('pinCode')?.invalid &&
+            (registerForm?.get('pinCode')?.dirty ||
+              registerForm?.get('pinCode')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('pinCode')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Pin Code is required.
+          </div>
+          <div
+            *ngIf="(registerForm?.get('pinCode')?.errors?.['minlength'] || registerForm?.get('pinCode')?.errors?.['maxlength']) && !registerForm?.get('pinCode')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Pin Code must be 6 digits.
+          </div>
         </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="country"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Country</label
         >
         <div class="mt-2">
@@ -322,12 +427,28 @@
             </option>
           </select>
         </div>
+        <div
+          *ngIf="
+            registerForm?.get('country')?.invalid &&
+            (registerForm?.get('country')?.dirty ||
+              registerForm?.get('country')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('country')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Country is required.
+          </div>
+        </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="stateOfOrigin"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >State</label
         >
         <div class="mt-2">
@@ -347,12 +468,29 @@
             </option>
           </select>
         </div>
+
+        <div
+          *ngIf="
+            registerForm?.get('stateOfOrigin')?.invalid &&
+            (registerForm?.get('stateOfOrigin')?.dirty ||
+              registerForm?.get('stateOfOrigin')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('stateOfOrigin')?.errors?.['required'] && registerForm?.get('country')?.valid"
+            class="font-medium"
+          >
+            * State is required.
+          </div>
+        </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="email"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Email</label
         >
         <div class="mt-2">
@@ -366,12 +504,34 @@
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
+        <div
+          *ngIf="
+            registerForm?.get('email')?.invalid &&
+            (registerForm?.get('email')?.dirty ||
+              registerForm?.get('email')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('email')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Email is required.
+          </div>
+          <div
+            *ngIf="registerForm?.get('email')?.errors?.['email'] && !registerForm?.get('email')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Email is invalid.
+          </div>
+        </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="phoneNumber"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Phone Number</label
         >
         <div class="mt-2">
@@ -380,17 +540,40 @@
             name="phoneNumber"
             id="phoneNumber"
             formControlName="phoneNumber"
+            (keypress)="allowOnlyNumbers($event)"
             placeholder="Enter your primary phone number"
             required
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
+        </div>
+        <div
+          *ngIf="
+            registerForm?.get('phoneNumber')?.invalid &&
+            (registerForm?.get('phoneNumber')?.dirty ||
+              registerForm?.get('phoneNumber')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('phoneNumber')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Phone number is required.
+          </div>
+          <div
+            *ngIf="(registerForm?.get('phoneNumber')?.errors?.['minlength'] || registerForm?.get('phoneNumber')?.errors?.['maxlength']) && !registerForm?.get('phoneNumber')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Phone number must be 10 digits.
+          </div>
         </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="alternativePhoneNumber"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Alternative Phone Number</label
         >
         <div class="mt-2">
@@ -399,17 +582,40 @@
             name="alternativePhoneNumber"
             id="alternativePhoneNumber"
             formControlName="alternativePhoneNumber"
+            (keypress)="allowOnlyNumbers($event)"
             placeholder="Enter your backup phone number"
             required
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
+        <div
+        *ngIf="
+          registerForm?.get('alternativePhoneNumber')?.invalid &&
+          (registerForm?.get('alternativePhoneNumber')?.dirty ||
+            registerForm?.get('alternativePhoneNumber')?.touched)
+        "
+        class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+        role="alert"
+      >
+        <div
+          *ngIf="registerForm?.get('alternativePhoneNumber')?.errors?.['required']"
+          class="font-medium"
+        >
+          * Alternate phone number is required.
+        </div>
+        <div
+          *ngIf="(registerForm?.get('alternativePhoneNumber')?.errors?.['minlength'] || registerForm?.get('alternativePhoneNumber')?.errors?.['maxlength']) && !registerForm?.get('alternativePhoneNumber')?.errors?.['required']"
+          class="font-medium"
+        >
+          * Phone number must be 10 digits.
+        </div>
+      </div>
       </div>
 
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="role"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Role</label
         >
         <div class="mt-2">
@@ -425,12 +631,29 @@
             <option value="ADMIN">ADMIN</option>
           </select>
         </div>
+
+        <div
+          *ngIf="
+            registerForm?.get('role')?.invalid &&
+            (registerForm?.get('role')?.dirty ||
+              registerForm?.get('role')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('role')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Role is required.
+          </div>
+        </div>
       </div>
 
       <div class="relative flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="password"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Password</label
         >
         <div class="mt-2">
@@ -446,6 +669,31 @@
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
+
+        <div
+          *ngIf="
+            registerForm?.get('password')?.invalid &&
+            (registerForm?.get('password')?.dirty ||
+              registerForm?.get('password')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('password')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Password is required.
+          </div>
+
+          <div
+            *ngIf="registerForm?.get('password')?.hasError && !registerForm?.get('password')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Password is invalid.
+          </div>
+        </div>
+
         <div
           *ngIf="showAlert"
           class="absolute left-0 -top-[250%] mt-1 w-full p-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-700 dark:text-blue-400 shadow-md flex items-start"
@@ -468,12 +716,12 @@
               >Ensure that these requirements are met:</span
             >
             <ul class="mt-1.5 list-disc list-inside">
-              <li>At least 8 characters</li>
-              <li>At max 16 characters</li>
-              <li>At least one lowercase character</li>
-              <li>At least one uppercase character</li>
-              <li>At least one number</li>
-              <li>At least one special character</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched) && registerForm.get('password')?.hasError('minlength')}" >At least 8 characters.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched) && registerForm.get('password')?.hasError('maxlength')}">At max 16 characters.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched) && registerForm.get('password')?.hasError('noLowerCase')}">At least one lowercase character.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched) && registerForm.get('password')?.hasError('noUpperCase')}">At least one uppercase character.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched) && registerForm.get('password')?.hasError('noDigit')}">At least one number.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched) && registerForm.get('confirmPassword')?.hasError('noSpecialChar')}">At least one special character.</li>
             </ul>
           </div>
         </div>
@@ -482,7 +730,7 @@
       <div class="relative flex-1 min-w-full sm:min-w-[320px]">
         <label
           for="confirmPassword"
-          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-500"
+          class="block text-sm font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
           >Confirm Password</label
         >
         <div class="mt-2">
@@ -497,6 +745,30 @@
             (focus)="showAlertConfirm = true"
             (blur)="showAlertConfirm = false"
           />
+        </div>
+
+        <div
+          *ngIf="
+            registerForm?.get('confirmPassword')?.invalid &&
+            (registerForm?.get('confirmPassword')?.dirty ||
+              registerForm?.get('confirmPassword')?.touched)
+          "
+          class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+          role="alert"
+        >
+          <div
+            *ngIf="registerForm?.get('confirmPassword')?.errors?.['required']"
+            class="font-medium"
+          >
+            * Password is required.
+          </div>
+
+          <div
+            *ngIf="registerForm?.errors?.['passwordMismatch']"
+            class="font-medium"
+          >
+            * Password doesn't match.
+          </div>
         </div>
 
         <div
@@ -521,12 +793,12 @@
               >Ensure that these requirements are met:</span
             >
             <ul class="mt-1.5 list-disc list-inside">
-              <li>At least 8 characters</li>
-              <li>At max 16 characters</li>
-              <li>At least one lowercase character</li>
-              <li>At least one uppercase character</li>
-              <li>At least one number</li>
-              <li>At least one special character</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) && registerForm.get('confirmPassword')?.hasError('minlength')}" >At least 8 characters.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) && registerForm.get('confirmPassword')?.hasError('maxlength')}">At max 16 characters.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) && registerForm.get('confirmPassword')?.hasError('noLowerCase')}">At least one lowercase character.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) && registerForm.get('confirmPassword')?.hasError('noUpperCase')}">At least one uppercase character.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) && registerForm.get('confirmPassword')?.hasError('noDigit')}">At least one number.</li>
+              <li [ngClass]="{'text-red-800 dark:text-red-400': registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) && registerForm.get('confirmPassword')?.hasError('noSpecialChar')}">At least one special character.</li>
             </ul>
           </div>
         </div>

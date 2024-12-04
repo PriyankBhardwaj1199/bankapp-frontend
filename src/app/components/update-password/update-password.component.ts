@@ -19,6 +19,8 @@ import {
 })
 export class UpdatePasswordComponent {
   showAlert: boolean = false;
+  showPassword: boolean = false;
+
 
   updateForm!: FormGroup;
 
@@ -107,6 +109,10 @@ export class UpdatePasswordComponent {
 
 
     return Object.keys(errors).length ? errors : null;
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword; // Toggle the state
   }
 
 }
