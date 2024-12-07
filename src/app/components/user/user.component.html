@@ -1,99 +1,406 @@
-<div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-400">
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-       <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-       </svg>
-    </p>
- </div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 h-96">
+  <div class="lg:col-span-2 bg-slate-100 dark:bg-gray-700 rounded-lg h-96">
+    <div
+      class="h-full flex flex-wrap justify-start dark:bg-gray-700 rounded-lg p-4 shadow-sm"
+    >
+      <div class="w-full">
+        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white mb-2">
+          {{ greeting }}, John Doe
+        </h1>
+      </div>
 
-<div class="grid grid-cols-3 gap-4 mb-4">
-    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
+      <div class="w-1/2">
+        <p class="text-sm text-gray-700 dark:text-gray-300">Account Number:</p>
+        <h3 class="text-lg font-medium text-gray-800 dark:text-white">
+          1234 5678 9012 3456
+        </h3>
+      </div>
+
+      <div class="w-1/2">
+        <p class="text-sm text-gray-700 dark:text-gray-300">Email:</p>
+        <h3 class="text-lg font-medium text-gray-800 dark:text-white">
+          johndoe&#64;email.com
+        </h3>
+      </div>
+
+      <div class="w-1/2">
+        <p class="text-sm text-gray-700 dark:text-gray-300">Phone Number:</p>
+        <h3 class="text-lg font-medium text-gray-800 dark:text-white">
+          9890123456
+        </h3>
+      </div>
+
+      <div class="w-1/2">
+        <p class="text-sm text-gray-700 dark:text-gray-300">
+          Alternate Phone Number:
+        </p>
+        <h3 class="text-lg font-medium text-gray-800 dark:text-white">
+          9890123456
+        </h3>
+      </div>
+
+      <div class="w-1/2">
+        <p class="text-sm text-gray-700 dark:text-gray-300">Account Status:</p>
+        <h3 class="text-lg font-medium text-gray-800 dark:text-white">
+          Active
+        </h3>
+      </div>
+
+      <div class="w-1/2">
+        <p class="text-sm text-gray-700 dark:text-gray-300">
+          Account Active Since:
+        </p>
+        <h3 class="text-lg font-medium text-gray-800 dark:text-white">
+          5 years 3 month(s)
+        </h3>
+      </div>
+
+      <div class="w-full">
+        <p class="text-sm text-gray-700 dark:text-gray-300">Address:</p>
+        <h3 class="text-lg font-medium text-gray-800 dark:text-white">
+          123 Main Street, Apartment 45 Springfield, IL 62704 United States
+        </h3>
+      </div>
     </div>
-    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
+  </div>
+
+  <div class="rounded-lg bg-slate-100 dark:bg-gray-700 h-96">
+    <div class="w-full max-w-md p-4 rounded-lg sm:p-4">
+      <div class="h-full flex flex-col justify-start">
+        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+          Account Balance
+        </h2>
+        <p class="text-lg text-gray-700 dark:text-gray-300">
+          Your current balance is:
+        </p>
+        <p class="text-4xl font-bold text-green-500 dark:text-green-400 mt-2">
+          ₹5,000.00
+        </p>
+        <p class="text-xl font-bold text-gray-800 dark:text-blue-200 mt-4">
+          Timeline
+        </p>
+
+        <div class="relative mt-3">
+          <!-- Timeline items -->
+          <div class="border-l-4 border-green-500 dark:border-blue-200 pl-4">
+            <!-- Timeline Item 1 -->
+            <div class="mb-4 flex items-center">
+              <div
+                class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+              ></div>
+              <div>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                  October 1, 2024
+                </p>
+                <p
+                  class="inline text-lg font-semibold text-gray-800 dark:text-white"
+                >
+                  ₹4,500.00
+                </p>
+                <span class="ml-2 text-green-500 dark:text-green-400">▲</span>
+              </div>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="mb-4 flex items-center">
+              <div
+                class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+              ></div>
+              <div>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                  September 20, 2024
+                </p>
+                <p
+                  class="inline text-lg font-semibold text-gray-800 dark:text-white"
+                >
+                  ₹4,000.00
+                </p>
+                <span class="ml-2 text-green-500 dark:text-green-400">▲</span>
+              </div>
+            </div>
+
+            <!-- Timeline Item 3 -->
+            <div class="mb-4 flex items-center">
+              <div
+                class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+              ></div>
+              <div>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                  September 10, 2024
+                </p>
+                <p
+                  class="inline text-lg font-semibold text-gray-800 dark:text-white"
+                >
+                  ₹3,800.00
+                </p>
+                <span class="ml-2 text-red-500 dark:text-red-400">▼</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
+  </div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+  <div class="rounded-lg bg-slate-100 dark:bg-gray-700 h-32 md:h-64 p-4">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+      Transactions
+    </h2>
+
+    <div class="relative mt-3">
+      <!-- Timeline items -->
+      <div class="border-l-4 border-green-500 dark:border-blue-200 pl-4">
+        <!-- Timeline Item 1 -->
+        <div class="mb-4 flex items-center">
+          <div
+            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+          ></div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              October 1, 2024
+            </p>
+            <p
+              class="inline text-lg font-semibold text-gray-800 dark:text-white"
+            >
+              ₹4,500.00
+            </p>
+            <span class="ml-2 text-green-500 dark:text-green-400">▲</span>
+          </div>
+        </div>
+
+        <!-- Timeline Item 2 -->
+        <div class="mb-4 flex items-center">
+          <div
+            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+          ></div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              September 20, 2024
+            </p>
+            <p
+              class="inline text-lg font-semibold text-gray-800 dark:text-white"
+            >
+              ₹4,000.00
+            </p>
+            <span class="ml-2 text-green-500 dark:text-green-400">▲</span>
+          </div>
+        </div>
+
+        <!-- Timeline Item 3 -->
+        <div class="mb-4 flex items-center">
+          <div
+            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+          ></div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              September 10, 2024
+            </p>
+            <p
+              class="inline text-lg font-semibold text-gray-800 dark:text-white"
+            >
+              ₹3,800.00
+            </p>
+            <span class="ml-2 text-red-500 dark:text-red-400">▼</span>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div *ngIf="!hasTransactions">
+      <p class="text-base text-gray-700 dark:text-gray-300 mb-2">
+         You don't have any transactions.
+       </p>
+       <button
+       type="button"
+       routerLink="/dashboard/transactions"
+       class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+     >
+       Make Transaction
+     </button>   
+    </div> 
+  </div>
+  <div class="rounded-lg bg-slate-100 dark:bg-gray-700 h-32 md:h-64 p-4">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+      Transfers
+    </h2>
+    <div class="relative mt-3">
+      <!-- Timeline items -->
+      <div class="border-l-4 border-green-500 dark:border-blue-200 pl-4">
+        <!-- Timeline Item 1 -->
+        <div class="mb-4 flex items-center">
+          <div
+            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+          ></div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              October 1, 2024
+            </p>
+            <p
+              class="inline text-lg font-semibold text-gray-800 dark:text-white"
+            >
+              ₹4,500.00
+            </p>
+            <span class="ml-2 text-green-500 dark:text-green-400">▲</span>
+          </div>
+        </div>
+
+        <!-- Timeline Item 2 -->
+        <div class="mb-4 flex items-center">
+          <div
+            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+          ></div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              September 20, 2024
+            </p>
+            <p
+              class="inline text-lg font-semibold text-gray-800 dark:text-white"
+            >
+              ₹4,000.00
+            </p>
+            <span class="ml-2 text-green-500 dark:text-green-400">▲</span>
+          </div>
+        </div>
+
+        <!-- Timeline Item 3 -->
+        <div class="mb-4 flex items-center">
+          <div
+            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+          ></div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              September 10, 2024
+            </p>
+            <p
+              class="inline text-lg font-semibold text-gray-800 dark:text-white"
+            >
+              ₹3,800.00
+            </p>
+            <span class="ml-2 text-red-500 dark:text-red-400">▼</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!hasTransfers">
+      <p class="text-base text-gray-700 dark:text-gray-300 mb-2">
+         You don't have any amount transfers.
+       </p>
+       <button
+       type="button"
+       routerLink="/dashboard/transfer"
+       class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+     >
+       Make Transfer
+     </button>   
+    </div> 
+  </div>
+  <div class="rounded-lg bg-slate-100 dark:bg-gray-700 h-32 md:h-64 p-4">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+      Cards
+    </h2>
+
+    <div *ngIf="!hasCards">
+      <p class="text-base text-gray-700 dark:text-gray-300 mb-2">
+         You don't have any cards associated to this account.
+       </p>
+       <button
+       type="button"
+       routerLink="/dashboard/cards"
+       class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+     >
+       Apply
+     </button>   
+    </div> 
+
+    <div class="grid grid-cols-1 gap-2 md:gap-2">
+      <!-- Debit Card -->
+      <div class="p-2 bg-transparent dark:bg-gray-600 rounded-lg shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+          Debit Card
+        </h3>
+        <p class="text-sm text-gray-700 dark:text-gray-300">
+          Card Number: **** **** **** 1234
+        </p>
+        <p class="text-sm text-gray-700 dark:text-gray-300">
+          Expiry Date: 12/2026
+        </p>
+      </div>
+  
+      <!-- Credit Card -->
+      <div class="p-2 bg-transparent dark:bg-gray-600 rounded-lg shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+          Credit Card
+        </h3>
+        <p class="text-sm text-gray-700 dark:text-gray-300">
+          Card Number: **** **** **** 5678
+        </p>
+        <p class="text-sm text-gray-700 dark:text-gray-300">
+          Expiry Date: 11/2027
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="rounded-lg bg-slate-100 dark:bg-gray-700 h-32 md:h-64 p-4">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
+      Bank Statement
+    </h2>
+    <p class="text-sm text-gray-700 dark:text-gray-300">
+      Your last 3 statements were generated on
+    </p>
+
+    <div class="relative mt-4">
+      <!-- Timeline items -->
+      <div class="border-l-4 border-green-500 dark:border-blue-200 pl-4">
+        <!-- Timeline Item 1 -->
+        <div class="mb-4 flex items-center">
+          <div
+            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+          ></div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              October 1, 2024
+            </p>
+          </div>
+        </div>
+
+        <!-- Timeline Item 2 -->
+        <div class="mb-4 flex items-center">
+          <div
+            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+          ></div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              September 20, 2024
+            </p>
+          </div>
+        </div>
+
+        <!-- Timeline Item 3 -->
+        <div class="mb-4 flex items-center">
+          <div
+            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+          ></div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              September 10, 2024
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      routerLink="/dashboard/bankstatement"
+      class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+    >
+      Generate Statement
+    </button>
+  </div>
 </div>
 
- <div class="grid grid-cols-2 gap-4 mb-4">
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
- </div>
- <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-400">
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-       <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-       </svg>
-    </p>
- </div>
- <div class="grid grid-cols-2 gap-4">
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
- </div>
+<!-- <div
+  class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"
+></div> -->

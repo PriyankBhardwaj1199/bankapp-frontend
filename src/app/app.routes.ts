@@ -11,6 +11,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { TransferComponent } from './components/transfer/transfer.component';
 import { BankstatementComponent } from './components/bankstatement/bankstatement.component';
 import { CardsComponent } from './components/cards/cards.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent,
         children: [
             { path: 'user-dashboard', component: UserComponent },
+            { path: 'admin-dashboard', component: AdminComponent },
             { path: 'accounts', component: AccountsComponent },
             { path: 'transactions', component: TransactionsComponent },
             { path: 'transfer', component: TransferComponent },

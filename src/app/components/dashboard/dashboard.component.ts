@@ -32,10 +32,15 @@ export class DashboardComponent {
   onMenuItemSelect(menu: string) {
     console.log(this.breadcrumbs$);
     switch (menu) {
-      case 'Dashboard':
+      case 'UserDashboard':
         this.breadcrumbService.clearBreadcrumbs();
         this.breadcrumbService.addBreadcrumb({ label: 'Dashboard', url: '/dashboard/user-dashboard' });
         this.router.navigate(['/dashboard/user-dashboard']);
+        break;
+      case 'AdminDashboard':
+        this.breadcrumbService.clearBreadcrumbs();
+        this.breadcrumbService.addBreadcrumb({ label: 'Dashboard', url: '/dashboard/admin-dashboard' });
+        this.router.navigate(['/dashboard/admin-dashboard']);
         break;
       case 'Accounts':
         this.breadcrumbService.clearBreadcrumbs();
