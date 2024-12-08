@@ -1,5 +1,113 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 h-96">
   <div class="lg:col-span-2 bg-slate-100 dark:bg-gray-700 rounded-lg h-96">
+
+<!-- Main modal -->
+<div *ngIf="showUpdateModal" id="updateProductModal" tabindex="-1" aria-hidden="true" class="backdrop-blur-md overflow-y-auto overflow-x-hidden fixed z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+  <div class="relative translate-x-[35%] p-4 w-full max-w-4xl h-full md:h-auto">
+      <!-- Modal content -->
+      <div class="relative p-4 bg-gray-100 rounded-lg shadow dark:bg-gray-600 sm:p-5">
+          <!-- Modal header -->
+          <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                  Update Profile
+              </h3>
+              <button (click)="toggleUpdateModal()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="updateProductModal">
+                  <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                  <span class="sr-only">Close modal</span>
+              </button>
+          </div>
+          <!-- Modal body -->
+          <form action="#">
+              <div class="grid gap-5 mb-6 sm:grid-cols-4">
+                  <div>
+                      <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                      <input type="text" name="firstName" id="firstName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Eg. Mark">
+                  </div>
+                  <div>
+                      <label for="middleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
+                      <input type="text" name="middleName" id="middleName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Eg. Alexander">
+                  </div>
+                  <div>
+                      <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                      <input type="text" name="lastName" id="lastName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Eg. Harrison">
+                  </div>
+                  <div>
+                      <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                      <select
+                      id="gender"
+                      name="gender"
+                      formControlName="gender"
+                      required
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option value="" selected>Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                    </div>
+                  <div class="sm:col-span-2">
+                      <label for="addressLine1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address Line 1</label>
+                      <input type="text" name="addressLine1" id="addressLine1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="House Number / Flat Number">
+                  </div>
+                  <div class="sm:col-span-2">
+                      <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address Line 2</label>
+                      <input type="text"name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Locality / Landmark">
+
+                  </div>
+                  <div>
+                      <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City</label>
+                      <input type="text" name="city" id="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Eg. Noida">
+                  </div>
+                  <div>
+                      <label for="pinCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pin Code</label>
+                      <input type="text" name="pinCode" id="pinCode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Eg. 245064">
+                  </div>
+                  <div>
+                      <label for="country" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
+                      <select
+                      id="country"
+                      name="country"
+                      formControlName="country"
+                      required
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option value="" selected>Select Country</option>
+                    </select>
+                  </div>
+                  <div>
+                      <label for="stateOfOrigin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
+                      <select
+                      id="stateOfOrigin"
+                      name="stateOfOrigin"
+                      formControlName="stateOfOrigin"
+                      required
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option value="" selected>Select Country First</option>
+                    </select>
+                  </div>
+                  <div class="col-span-2">
+                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                      <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Eg. markharrison@gmail.com">
+                  </div>
+                  <div>
+                      <label for="phoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+                      <input type="tel" name="phoneNumber" id="phoneNumber" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter your primary phone number">
+                  </div>
+                  <div>
+                      <label for="alternativePhoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alternate Phone Number</label>
+                      <input type="tel" name="alternativePhoneNumber" id="alternativePhoneNumber" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter your backup phone number">
+                  </div>
+                  
+              </div>
+              <div class="flex items-center justify-center space-x-4">
+                <button type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Update</button>
+                <button type="button" (click)="toggleUpdateModal()" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cancel</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
     <div
       class="h-full flex flex-wrap justify-start dark:bg-gray-700 rounded-lg p-4 shadow-sm"
     >
@@ -55,11 +163,21 @@
         </h3>
       </div>
 
-      <div class="w-full">
+      <div class="w-2/3">
         <p class="text-sm text-gray-700 dark:text-gray-300">Address:</p>
         <h3 class="text-lg font-medium text-gray-800 dark:text-white">
           123 Main Street, Apartment 45 Springfield, IL 62704 United States
         </h3>
+      </div>
+
+      <div class="w-1/3 flex items-center justify-center">
+        <button
+      type="button"
+      (click)="toggleUpdateModal()"
+      class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+    >
+      Update Profile
+    </button>    
       </div>
     </div>
   </div>
@@ -213,7 +331,7 @@
        </p>
        <button
        type="button"
-       routerLink="/dashboard/transactions"
+       (click)="onMenuItemSelect('Transactions')"
        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
      >
        Make Transaction
@@ -289,7 +407,7 @@
        </p>
        <button
        type="button"
-       routerLink="/dashboard/transfer"
+       (click)="onMenuItemSelect('Transfer')"
        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
      >
        Make Transfer
@@ -307,7 +425,7 @@
        </p>
        <button
        type="button"
-       routerLink="/dashboard/cards"
+       (click)="onMenuItemSelect('Cards')"
        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
      >
        Apply
@@ -347,7 +465,7 @@
       Bank Statement
     </h2>
     <p class="text-sm text-gray-700 dark:text-gray-300">
-      Your last 3 statements were generated on
+      Your last 3 statements
     </p>
 
     <div class="relative mt-4">
@@ -393,7 +511,7 @@
 
     <button
       type="button"
-      routerLink="/dashboard/bankstatement"
+      (click)="onMenuItemSelect('Bank Statement')"
       class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
     >
       Generate Statement
