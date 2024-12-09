@@ -145,8 +145,6 @@
       [formGroup]="registerForm"
       autocomplete="off"
       class="flex flex-wrap gap-4 justify-start p-4 shadow-2xl"
-      action="#"
-      method="POST"
     >
       <div class="flex-1 min-w-full sm:min-w-[320px]">
         <label
@@ -463,7 +461,7 @@
               {{ defaultStateMessage }}
             </option>
             <option *ngIf="states.length !== 0" value="">Select State</option>
-            <option *ngFor="let state of states" [value]="state.isoCode">
+            <option *ngFor="let state of states" [value]="state.name">
               {{ state.name }}
             </option>
           </select>

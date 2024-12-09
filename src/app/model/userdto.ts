@@ -1,9 +1,7 @@
-export class User{
+export class UserDto{
     public firstName: string | undefined;
     public middleName: string | undefined;
     public lastName: string | undefined;
-    public accountNumber: string | undefined;
-    public accountBalance: string | undefined;
     public gender: string | undefined;
     public addressLine1: string | undefined;
     public addressLine2: string | undefined;
@@ -14,8 +12,6 @@ export class User{
     public email: string | undefined;
     public password: string | undefined;
     public role: string | undefined;
-    public status: string | undefined;
     public phoneNumber: string | undefined;
-    public createdAt: string | undefined;
     public alternativePhoneNumber: string | undefined;
 }

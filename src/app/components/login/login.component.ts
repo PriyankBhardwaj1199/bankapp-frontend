@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
+import { UserService } from '../../services/user.service';
+import { Login } from '../../model/login';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +15,11 @@ import { NgClass, NgIf } from '@angular/common';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  loginDto:Login = new Login();
 
   showPassword:boolean=false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private userService:UserService,private router:Router) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required,Validators.email]],
       password: [
@@ -33,7 +36,25 @@ export class LoginComponent {
 
   onSubmit(){
     if(this.loginForm?.valid){
-      console.log(this.loginForm.value)
+      this.loginDto.username = this.loginForm.get('email')?.value;
+      this.loginDto.password = this.loginForm.get('password')?.value;
+
+      this.userService.loginUser(this.loginDto).subscribe((response)=>{
+        // console.log(response)
+        if(response.responseCode==401){
+          this.router.navigate(['/home']);
+        }
+
+        if(response?.['jwtResponse']!=null){
+          localStorage.setItem('token',response?.['jwtResponse'].token);
+          localStorage.setItem('username',response?.['jwtResponse'].userName);
+          localStorage.setItem('role',response?.['jwtResponse'].roles);
+          localStorage.setItem('accountNumber',response?.['jwtResponse'].accountNumber);
+          this.router.navigate(['/dashboard/user-dashboard']);
+        }
+      }, (error)=>{
+        console.log(error)
+      })
     }
   }
   

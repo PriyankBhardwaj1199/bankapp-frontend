@@ -75,6 +75,10 @@ export class DashboardComponent {
   }
 
   logout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    localStorage.removeItem('accountNumber');
     this.router.navigate(['/home']);
   }
 
