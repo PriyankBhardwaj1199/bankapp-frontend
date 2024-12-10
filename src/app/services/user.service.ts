@@ -40,4 +40,8 @@ export class UserService {
   fetchTransactions(accountNumber:string):Observable<Transaction[]>{
     return this.http.get<Transaction[]>(this.apiUrl+'transactions/'+accountNumber);
   }
+
+  updateUser(user: UserDto): Observable<BankResponse> {
+    return this.http.patch<BankResponse>(this.apiUrl + 'update', user);
+  }
 }

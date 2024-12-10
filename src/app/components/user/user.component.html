@@ -471,7 +471,7 @@
             </div>
             <div class="flex items-center justify-center space-x-4">
               <button
-                type="button"
+                type="submit"
                 class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
               >
                 Update
@@ -581,57 +581,26 @@
         <div class="relative mt-3">
           <!-- Timeline items -->
           <div class="border-l-4 border-green-500 dark:border-blue-200 pl-4">
-            <!-- Timeline Item 1 -->
-            <div class="mb-4 flex items-center">
+            
+            <div *ngFor="let transaction of transactions | slice:0:3" class="mb-4 flex items-center">
               <div
                 class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
               ></div>
               <div>
                 <p class="text-sm text-gray-700 dark:text-gray-300">
-                  October 1, 2024
+                  {{transaction.createdAt}}
                 </p>
                 <p
                   class="inline text-lg font-semibold text-gray-800 dark:text-white"
                 >
-                  ₹4,500.00
+                 ₹ {{transaction.runningBalance}}
                 </p>
-                <span class="ml-2 text-green-500 dark:text-green-400">▲</span>
-              </div>
-            </div>
-
-            <!-- Timeline Item 2 -->
-            <div class="mb-4 flex items-center">
-              <div
-                class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
-              ></div>
-              <div>
-                <p class="text-sm text-gray-700 dark:text-gray-300">
-                  September 20, 2024
-                </p>
-                <p
-                  class="inline text-lg font-semibold text-gray-800 dark:text-white"
-                >
-                  ₹4,000.00
-                </p>
-                <span class="ml-2 text-green-500 dark:text-green-400">▲</span>
-              </div>
-            </div>
-
-            <!-- Timeline Item 3 -->
-            <div class="mb-4 flex items-center">
-              <div
-                class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
-              ></div>
-              <div>
-                <p class="text-sm text-gray-700 dark:text-gray-300">
-                  September 10, 2024
-                </p>
-                <p
-                  class="inline text-lg font-semibold text-gray-800 dark:text-white"
-                >
-                  ₹3,800.00
-                </p>
-                <span class="ml-2 text-red-500 dark:text-red-400">▼</span>
+                <span 
+                [ngClass]="{
+                  'ml-2 text-green-500 dark:text-green-400': (transaction.transactionType === 'Deposit' || transaction.transactionType === 'Payment'),
+                  'ml-2 text-red-500 dark:text-red-400': (transaction.transactionType === 'Withdrawal' || transaction.transactionType === 'Transfer')
+                }"
+                >{{(transaction.transactionType === 'Deposit' || transaction.transactionType === 'Payment')?'▲':'▼'}}</span>
               </div>
             </div>
           </div>
@@ -688,28 +657,27 @@
       Transfers
     </h2>
     <div *ngIf="transferCount>0" class="relative mt-3">
-      <!-- Timeline items -->
-      <!-- <div class="border-l-4 border-green-500 dark:border-blue-200 pl-4"> -->
-        <!-- Timeline Item 1 -->
-        <div *ngFor="let transaction of transactions;" class="mb-4 flex items-center">
-
-          <div *ngIf="transaction.transactionType=='Transfer'"
-             class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
-          ></div>
-            <div *ngIf="transaction.transactionType=='Transfer'">
-              <div>
-                <p class="text-sm text-gray-700 dark:text-gray-300">
-                  {{transaction.createdAt}}
-                </p>
-                <p
-                  class="inline text-lg font-semibold text-gray-800 dark:text-white"
-                >
-                ₹{{transaction.amount}}
-                </p>
-                <span class="ml-2 text-red-500 dark:text-red-400">▼</span>
+        <div *ngFor="let transaction of transactions;">
+          <div *ngIf="transaction.transactionType=='Transfer'" class="mb-4 flex items-center">
+  
+            <div *ngIf="transaction.transactionType=='Transfer'"
+               class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
+            ></div>
+              <div *ngIf="transaction.transactionType=='Transfer'">
+                <div>
+                  <p class="text-sm text-gray-700 dark:text-gray-300">
+                    {{transaction.createdAt}}
+                  </p>
+                  <p
+                    class="inline text-lg font-semibold text-gray-800 dark:text-white"
+                  >
+                  ₹{{transaction.amount}}
+                  </p>
+                  <span class="ml-2 text-red-500 dark:text-red-400">▼</span>
+                </div>
+  
               </div>
-
-            </div>
+          </div>
         </div>
 
         
@@ -725,7 +693,7 @@
         (click)="onMenuItemSelect('Transfer')"
         class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
         [ngClass]="{
-          'mt-8': transferCount==1,
+          'mt-16': transferCount==1,
           '-mt-2': transferCount==2,
         }"
         >
@@ -739,10 +707,11 @@
     </h2>
 
     <div *ngIf="!hasCards">
-      <p class="text-base text-gray-700 dark:text-gray-300 mb-2">
+      <p *ngIf="totalCards===0" class="text-base text-gray-700 dark:text-gray-300 mb-2">
         You don't have any cards associated to this account.
       </p>
       <button
+      *ngIf="totalCards<=1"
         type="button"
         (click)="onMenuItemSelect('Cards')"
         class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
@@ -753,30 +722,18 @@
 
     <div class="grid grid-cols-1 gap-2 md:gap-2">
       <!-- Debit Card -->
-      <div class="p-2 bg-transparent dark:bg-gray-600 rounded-lg shadow-sm">
+      <div *ngFor="let card of cards" class="p-2 bg-slate-200 dark:bg-gray-600 rounded-lg shadow-sm">
         <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
-          Debit Card
+          {{card.cardType}} Card
         </h3>
         <p class="text-sm text-gray-700 dark:text-gray-300">
-          Card Number: **** **** **** 1234
+          Card Number: {{card.cardNumber}}
         </p>
         <p class="text-sm text-gray-700 dark:text-gray-300">
-          Expiry Date: 12/2026
+          Expiry Date: {{card.expiryDate}}
         </p>
       </div>
 
-      <!-- Credit Card -->
-      <div class="p-2 bg-transparent dark:bg-gray-600 rounded-lg shadow-sm">
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
-          Credit Card
-        </h3>
-        <p class="text-sm text-gray-700 dark:text-gray-300">
-          Card Number: **** **** **** 5678
-        </p>
-        <p class="text-sm text-gray-700 dark:text-gray-300">
-          Expiry Date: 11/2027
-        </p>
-      </div>
     </div>
   </div>
   <div class="rounded-lg bg-slate-100 dark:bg-gray-700 h-32 md:h-64 p-4">
@@ -791,37 +748,13 @@
       <!-- Timeline items -->
       <div class="border-l-4 border-green-500 dark:border-blue-200 pl-4">
         <!-- Timeline Item 1 -->
-        <div class="mb-4 flex items-center">
+        <div *ngFor="let statement of statements" class="mb-4 flex items-center">
           <div
             class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
           ></div>
           <div>
             <p class="text-sm text-gray-700 dark:text-gray-300">
-              October 1, 2024
-            </p>
-          </div>
-        </div>
-
-        <!-- Timeline Item 2 -->
-        <div class="mb-4 flex items-center">
-          <div
-            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
-          ></div>
-          <div>
-            <p class="text-sm text-gray-700 dark:text-gray-300">
-              September 20, 2024
-            </p>
-          </div>
-        </div>
-
-        <!-- Timeline Item 3 -->
-        <div class="mb-4 flex items-center">
-          <div
-            class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
-          ></div>
-          <div>
-            <p class="text-sm text-gray-700 dark:text-gray-300">
-              September 10, 2024
+              {{ getDate(statement.createdOn ?? '') }}
             </p>
           </div>
         </div>

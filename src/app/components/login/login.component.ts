@@ -5,11 +5,12 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors, 
 import { NgClass, NgIf } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { Login } from '../../model/login';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HeaderComponent,RouterLink,ReactiveFormsModule,NgIf,NgClass],
+  imports: [HeaderComponent, RouterLink, ReactiveFormsModule, NgIf, NgClass],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -19,7 +20,7 @@ export class LoginComponent {
 
   showPassword:boolean=false;
 
-  constructor(private formBuilder: FormBuilder,private userService:UserService,private router:Router) {
+  constructor(private formBuilder: FormBuilder,private userService:UserService,private router:Router,private alertService: AlertService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required,Validators.email]],
       password: [
@@ -40,9 +41,10 @@ export class LoginComponent {
       this.loginDto.password = this.loginForm.get('password')?.value;
 
       this.userService.loginUser(this.loginDto).subscribe((response)=>{
-        // console.log(response)
         if(response.responseCode==401){
-          this.router.navigate(['/home']);
+          console.log(response)
+          this.alertService.showAlert(response.responseMessage,'error');
+          this.router.navigate(['/login']);
         }
 
         if(response?.['jwtResponse']!=null){
@@ -50,10 +52,18 @@ export class LoginComponent {
           localStorage.setItem('username',response?.['jwtResponse'].userName);
           localStorage.setItem('role',response?.['jwtResponse'].roles);
           localStorage.setItem('accountNumber',response?.['jwtResponse'].accountNumber);
-          this.router.navigate(['/dashboard/user-dashboard']);
+          localStorage.setItem('isLoggedIn','true');
+
+          this.alertService.showAlert(response.responseMessage,'success');
+
+          if(response?.['jwtResponse'].roles==='USER'){
+            this.router.navigate(['/dashboard/user-dashboard']);
+          } else{
+            this.router.navigate(['/dashboard/admin-dashboard']);
+          }         
         }
       }, (error)=>{
-        console.log(error)
+        this.alertService.showAlert(error,'error');
       })
     }
   }

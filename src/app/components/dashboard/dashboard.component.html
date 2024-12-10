@@ -2,6 +2,7 @@
   <nav
     class="fixed top-0 z-50 w-full bg-slate-100 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
   >
+  
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-start rtl:justify-end">
@@ -40,7 +41,8 @@
           </a>
         </div>
         <div class="flex items-center">
-          <div class="flex items-center ms-3 mx-3">
+          
+          <div class="flex items-center ms-3 mx-3">            
             <div class="mt-2 mx-10">
               <app-slider></app-slider>
             </div>
@@ -196,7 +198,7 @@
   >
     <div class="h-full px-3 pb-4 overflow-y-auto bg-slate-100 dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
-        <li (click)="onMenuItemSelect('UserDashboard')">
+        <li *ngIf="role==='USER'" (click)="onMenuItemSelect('UserDashboard')">
           <a
             routerLink="/dashboard/user-dashboard"
             routerLinkActive="bg-gray-300 dark:bg-gray-700 hover:bg-gray-300"
@@ -220,7 +222,7 @@
           </a>
         </li>
 
-        <li (click)="onMenuItemSelect('AdminDashboard')">
+        <li *ngIf="role==='ADMIN'" (click)="onMenuItemSelect('AdminDashboard')">
           <a
             routerLink="/dashboard/admin-dashboard"
             routerLinkActive="bg-gray-300 dark:bg-gray-700 hover:bg-gray-300"
@@ -244,7 +246,7 @@
           </a>
         </li>
 
-        <li (click)="onMenuItemSelect('Accounts')">
+        <li *ngIf="role==='ADMIN'" (click)="onMenuItemSelect('Accounts')">
           <a
             routerLink="/dashboard/accounts"
             routerLinkActive="bg-gray-300 dark:bg-gray-700 hover:bg-gray-300"
@@ -265,7 +267,7 @@
             <!-- <span class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span> -->
           </a>
         </li>
-        <li (click)="onMenuItemSelect('Transactions')">
+        <li *ngIf="role==='USER'" (click)="onMenuItemSelect('Transactions')">
           <a
             routerLink="/dashboard/transactions"
             routerLinkActive="bg-gray-300 dark:bg-gray-700 hover:bg-gray-300"
@@ -286,7 +288,7 @@
             <!-- <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span> -->
           </a>
         </li>
-        <li (click)="onMenuItemSelect('Transfer')">
+        <li *ngIf="role==='USER'" (click)="onMenuItemSelect('Transfer')">
           <a
             routerLink="/dashboard/transfer"
             routerLinkActive="bg-gray-300 dark:bg-gray-700 hover:bg-gray-300"
@@ -311,7 +313,7 @@
             <span class="flex-1 ms-3 whitespace-nowrap">Transfer</span>
           </a>
         </li>
-        <li (click)="onMenuItemSelect('Bank Statement')">
+        <li *ngIf="role==='USER'" (click)="onMenuItemSelect('Bank Statement')">
           <a
             routerLink="/dashboard/bankstatement"
             routerLinkActive="bg-gray-300 dark:bg-gray-700 hover:bg-gray-300"
@@ -331,7 +333,7 @@
             <span class="flex-1 ms-3 whitespace-nowrap">Bank Statement</span>
           </a>
         </li>
-        <li (click)="onMenuItemSelect('Cards')">
+        <li *ngIf="role==='USER'" (click)="onMenuItemSelect('Cards')">
           <a
             routerLink="/dashboard/cards"
             routerLinkActive="bg-gray-300 dark:bg-gray-700 hover:bg-gray-300"

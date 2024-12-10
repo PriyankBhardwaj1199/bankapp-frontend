@@ -4,11 +4,12 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { BreadcrumService } from '../../services/breadcrum.service';
 import { Observable } from 'rxjs';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SliderComponent,NgIf,RouterOutlet,RouterLink,RouterLinkActive,NgFor,CommonModule],
+  imports: [SliderComponent, NgIf, RouterOutlet, RouterLink, RouterLinkActive, NgFor, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -17,9 +18,10 @@ export class DashboardComponent {
   blurTimeout: any;
   breadcrumbs$!: Observable<{ label: string; url: string }[]>;
   showModal:boolean = false;
-  constructor(private breadcrumbService: BreadcrumService, private router: Router) {}
+  constructor(private breadcrumbService: BreadcrumService, private router: Router,private alertService:AlertService) {}
 
   showUserDropDown: boolean = false;
+  role: string = localStorage.getItem('role') ?? 'USER';
 
   ngOnInit() {
     this.breadcrumbs$ = this.breadcrumbService.getBreadcrumbs();
@@ -79,6 +81,8 @@ export class DashboardComponent {
     localStorage.removeItem('username');
     localStorage.removeItem('role');
     localStorage.removeItem('accountNumber');
+    localStorage.removeItem('isLoggedIn');
+    this.alertService.showAlert('You have been logged out successfully.','success');
     this.router.navigate(['/home']);
   }
 

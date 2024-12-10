@@ -10,5 +10,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './hero.component.css'
 })
 export class HeroComponent {
-
+  
+  
 }

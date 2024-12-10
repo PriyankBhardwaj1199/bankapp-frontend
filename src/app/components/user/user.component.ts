@@ -13,6 +13,12 @@ import { Country, State } from 'country-state-city';
 import { UserService } from '../../services/user.service';
 import { User } from '../../model/user';
 import { Transaction } from '../../model/transaction';
+import { CardsService } from '../../services/cards.service';
+import { Cards } from '../../model/cards';
+import { BankstatementService } from '../../services/bankstatement.service';
+import { BankStatement } from '../../model/bank-statement';
+import { AlertService } from '../../services/alert.service';
+import { UserDto } from '../../model/userdto';
 
 @Component({
   selector: 'app-user',
@@ -32,7 +38,10 @@ export class UserComponent {
   user!: User;
   countryName: string | undefined;
   userEmail: string = localStorage.getItem('username') ?? '';
-  transactions:Transaction[] = [];
+  transactions: Transaction[] = [];
+  cards: Cards[] = [];
+  statements: BankStatement[] = [];
+  accountBalance: number[] = [];
 
   countries: { name: string; isoCode: string }[] = [];
   states: { name: string; isoCode: string }[] = [];
@@ -40,12 +49,17 @@ export class UserComponent {
 
   breadcrumbs$!: Observable<{ label: string; url: string }[]>;
   transferCount: number = 0;
+  totalCards: number = 0;
+  userDto: UserDto = new UserDto();
 
   constructor(
     private breadcrumbService: BreadcrumService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private cardsService: CardsService,
+    private bankStatementService: BankstatementService,
+    private alertService: AlertService
   ) {
     this.greeting = this.getGreeting();
 
@@ -99,9 +113,8 @@ export class UserComponent {
     this.breadcrumbs$ = this.breadcrumbService.getBreadcrumbs();
     this.countries = Country.getAllCountries();
 
-    this.userService
-      .fetchAccount(this.userEmail)
-      .subscribe((response) => {
+    this.userService.fetchAccount(this.userEmail).subscribe(
+      (response) => {
         this.user = response;
         if (response.country) {
           const countryIsoCode = this.getCountryIsoCodeByName(response.country);
@@ -113,20 +126,114 @@ export class UserComponent {
         }
 
         this.updateForm.patchValue(response);
-      });
+      },
+      (error) => {
+        if (error.status === 403) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('username');
+          localStorage.removeItem('role');
+          localStorage.removeItem('accountNumber');
+          localStorage.removeItem('isLoggedIn');
+          this.alertService.showAlert(
+            'You have been logged out. Please login again.',
+            'info'
+          );
+          this.router.navigate(['/login']);
+        }
+      }
+    );
 
-      this.userService.fetchTransactions(localStorage.getItem('accountNumber')??'').subscribe((response)=>{
-        this.transactions = response
-        this.transferCount = this.transactions.filter(
-          transaction => transaction.transactionType === 'Transfer'
-        ).length;
-        if(this.transactions.length==0){
-          this.hasTransactions=false;
+    this.userService
+      .fetchTransactions(localStorage.getItem('accountNumber') ?? '')
+      .subscribe(
+        (response) => {
+          this.transactions = response.slice(0,3);
+          this.transferCount = this.transactions.filter(
+            (transaction) => transaction.transactionType === 'Transfer'
+          ).length;
+          if (this.transactions.length == 0) {
+            this.hasTransactions = false;
+          }
+          if (this.transferCount === 0) {
+            this.hasTransfers = false;
+          }
+        },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+            this.router.navigate(['/login']);
+          }
         }
-        if(this.transferCount===0){
-          this.hasTransfers=false;
+      );
+
+    this.cardsService
+      .getCardsByAccountNumber(localStorage.getItem('accountNumber') ?? '')
+      .subscribe(
+        (response) => {
+          this.cards = response;
+          this.totalCards = response.length;
+        },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+
+            this.router.navigate(['/login']);
+          }
         }
-      })
+      );
+
+    this.bankStatementService
+      .getStatementsByAccountNumber(localStorage.getItem('accountNumber') ?? '')
+      .subscribe(
+        (response) => {
+          this.statements = response.slice(0, 3);
+        },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+
+            this.router.navigate(['/login']);
+          }
+        }
+      );
+  }
+
+  getDate(inputDate: string) {
+    const date = new Date(inputDate);
+
+    // Format the date and time components
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    // Combine into desired format
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 
   allowOnlyNumbers(event: KeyboardEvent): void {
@@ -186,7 +293,49 @@ export class UserComponent {
 
   onSubmit() {
     if (this.updateForm?.valid) {
-      // console.log(this.updateForm.value);
+      this.userDto.firstName = this.updateForm.get('firstName')?.value;
+      this.userDto.lastName = this.updateForm.get('lastName')?.value;
+      this.userDto.middleName = this.updateForm.get('middleName')?.value;
+      this.userDto.email = this.updateForm.get('email')?.value;
+      this.userDto.city = this.updateForm.get('city')?.value;
+      this.userDto.country = Country.getCountryByCode(this.updateForm.get('country')?.value)?.name;
+      this.userDto.stateOfOrigin = this.updateForm.get('stateOfOrigin')?.value;
+      this.userDto.addressLine1 = this.updateForm.get('addressLine1')?.value;
+      this.userDto.addressLine2 = this.updateForm.get('addressLine2')?.value;
+      this.userDto.gender = this.updateForm.get('gender')?.value;
+      this.userDto.pinCode = this.updateForm.get('pinCode')?.value;
+      this.userDto.phoneNumber = this.updateForm.get('phoneNumber')?.value;
+      this.userDto.alternativePhoneNumber = this.updateForm.get('alternativePhoneNumber')?.value;
+
+      this.userService.updateUser(this.userDto).subscribe((response)=>{
+        if(response.responseCode===200){
+            this.alertService.showAlert(response.responseMessage,'success');
+          } else if(response.responseCode===404){
+            this.alertService.showAlert(response.responseMessage,'info');
+          } else if(response.responseCode===500){
+            this.alertService.showAlert(response.responseMessage,'error');
+          }
+          this.showUpdateModal = false;
+          setTimeout(() => {
+            window.location.reload();
+            
+          }, 2000);
+      },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+
+            this.router.navigate(['/login']);
+          }
+        })
     }
   }
 
@@ -231,7 +380,7 @@ export class UserComponent {
     // Return days if there are 0 years and 0 months
     if (years === 0 && months === 0) {
       return `${days} day(s)`;
-    } else if(years===0 && months !==0){
+    } else if (years === 0 && months !== 0) {
       return `${months} month(s) and ${days} day(s)`;
     }
 

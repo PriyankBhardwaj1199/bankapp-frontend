@@ -12,7 +12,7 @@ import { TransferComponent } from './components/transfer/transfer.component';
 import { BankstatementComponent } from './components/bankstatement/bankstatement.component';
 import { CardsComponent } from './components/cards/cards.component';
 import { AdminComponent } from './components/admin/admin.component';
-
+import { authGuard } from './gaurds/auth.guard';
 
 
 export const routes: Routes = [
@@ -23,16 +23,16 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'home', component: HeroComponent},
     { path: 'services', component: FeaturesComponent},
-    { path: 'password-update', component: UpdatePasswordComponent},
-    { path: 'dashboard', component: DashboardComponent,
+    { path: 'password-update', component: UpdatePasswordComponent,canActivate: [authGuard]},
+    { path: 'dashboard', component: DashboardComponent,canActivate: [authGuard],
         children: [
-            { path: 'user-dashboard', component: UserComponent },
-            { path: 'admin-dashboard', component: AdminComponent },
-            { path: 'accounts', component: AccountsComponent },
-            { path: 'transactions', component: TransactionsComponent },
-            { path: 'transfer', component: TransferComponent },
-            { path: 'bankstatement', component: BankstatementComponent },
-            { path: 'cards', component: CardsComponent }
+            { path: 'user-dashboard', component: UserComponent,canActivate: [authGuard] },
+            { path: 'admin-dashboard', component: AdminComponent,canActivate: [authGuard] },
+            { path: 'accounts', component: AccountsComponent,canActivate: [authGuard] },
+            { path: 'transactions', component: TransactionsComponent,canActivate: [authGuard] },
+            { path: 'transfer', component: TransferComponent,canActivate: [authGuard] },
+            { path: 'bankstatement', component: BankstatementComponent,canActivate: [authGuard] },
+            { path: 'cards', component: CardsComponent,canActivate: [authGuard] }
           ]
     },
 
