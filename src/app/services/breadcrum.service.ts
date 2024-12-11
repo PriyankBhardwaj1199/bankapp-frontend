@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 interface Breadcrumb {
@@ -7,14 +8,53 @@ interface Breadcrumb {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BreadcrumService {
+  constructor(private router: Router) {}
 
-  constructor() { }
+  private breadcrumbs: Breadcrumb[] = [];
 
-  private breadcrumbs: Breadcrumb[] = [{ label: 'Dashboard', url: '/dashboard/user-dashboard' }];
-  private breadcrumbSubject = new BehaviorSubject<Breadcrumb[]>(this.breadcrumbs);
+  setInitalBreadcrum(): void {
+    switch (this.router.url) {
+      case '/dashboard/user-dashboard':
+        this.breadcrumbs = [
+          { label: 'Dashboard', url: '/dashboard/user-dashboard' },
+        ];
+        console.log(this.breadcrumbs);
+        break;
+      case '/dashboard/admin-dashboard':
+        this.breadcrumbs = [
+          { label: 'Dashboard', url: '/dashboard/admin-dashboard' },
+        ];
+        console.log(this.breadcrumbs);
+        break;
+      case '/dashboard/transactions':
+        this.breadcrumbs = [
+          { label: 'Dashboard', url: '/dashboard/transactions' },
+        ];
+        console.log(this.breadcrumbs);
+        break;
+      case '/dashboard/transfer':
+        this.breadcrumbs = [{ label: 'Dashboard', url: '/dashboard/transfer' }];
+        console.log(this.breadcrumbs);
+        break;
+      case '/dashboard/cards':
+        this.breadcrumbs = [{ label: 'Dashboard', url: '/dashboard/cards' }];
+        console.log(this.breadcrumbs);
+        break;
+      case '/dashboard/bankstatement':
+        this.breadcrumbs = [
+          { label: 'Dashboard', url: '/dashboard/bankstatement' },
+        ];
+        console.log(this.breadcrumbs);
+        break;
+    }
+  }
+
+  private breadcrumbSubject = new BehaviorSubject<Breadcrumb[]>(
+    this.breadcrumbs
+  );
 
   getBreadcrumbs() {
     return this.breadcrumbSubject.asObservable();

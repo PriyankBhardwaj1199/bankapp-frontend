@@ -24,7 +24,10 @@ export class DashboardComponent {
   role: string = localStorage.getItem('role') ?? 'USER';
 
   ngOnInit() {
+    this.breadcrumbService.setInitalBreadcrum()
     this.breadcrumbs$ = this.breadcrumbService.getBreadcrumbs();
+    console.log('Bread crums: ')
+    console.log(this.breadcrumbs$)
   }
 
   toggleDropDown(){
@@ -32,7 +35,7 @@ export class DashboardComponent {
   }
 
   onMenuItemSelect(menu: string) {
-    console.log(this.breadcrumbs$);
+    
     switch (menu) {
       case 'UserDashboard':
         this.breadcrumbService.clearBreadcrumbs();

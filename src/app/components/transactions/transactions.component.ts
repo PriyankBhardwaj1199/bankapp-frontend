@@ -1,4 +1,12 @@
 import { Component } from '@angular/core';
+import { DataTable , exportCSV} from 'simple-datatables';
+
+interface CustomOptions {
+  download?: boolean;
+  filename?: string;
+  lineDelimiter?: string;
+  columnDelimiter?: string;
+}
 
 @Component({
   selector: 'app-transactions',
@@ -8,5 +16,7 @@ import { Component } from '@angular/core';
   styleUrl: './transactions.component.css'
 })
 export class TransactionsComponent {
+
+  
 
 }
