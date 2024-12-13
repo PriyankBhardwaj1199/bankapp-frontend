@@ -26,8 +26,6 @@ export class DashboardComponent {
   ngOnInit() {
     this.breadcrumbService.setInitalBreadcrum()
     this.breadcrumbs$ = this.breadcrumbService.getBreadcrumbs();
-    console.log('Bread crums: ')
-    console.log(this.breadcrumbs$)
   }
 
   toggleDropDown(){

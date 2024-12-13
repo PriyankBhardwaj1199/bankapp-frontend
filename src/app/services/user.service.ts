@@ -44,4 +44,8 @@ export class UserService {
   updateUser(user: UserDto): Observable<BankResponse> {
     return this.http.patch<BankResponse>(this.apiUrl + 'update', user);
   }
+
+  deleteTransaction(transactionId:string):Observable<BankResponse>{
+    return this.http.delete<BankResponse>(this.apiUrl+'transactions/'+transactionId);
+  }
 }

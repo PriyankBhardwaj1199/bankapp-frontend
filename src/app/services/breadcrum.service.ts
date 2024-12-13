@@ -21,35 +21,30 @@ export class BreadcrumService {
         this.breadcrumbs = [
           { label: 'Dashboard', url: '/dashboard/user-dashboard' },
         ];
-        console.log(this.breadcrumbs);
         break;
       case '/dashboard/admin-dashboard':
         this.breadcrumbs = [
           { label: 'Dashboard', url: '/dashboard/admin-dashboard' },
         ];
-        console.log(this.breadcrumbs);
         break;
       case '/dashboard/transactions':
         this.breadcrumbs = [
-          { label: 'Dashboard', url: '/dashboard/transactions' },
+          { label: 'Transactions', url: '/dashboard/transactions' },
         ];
-        console.log(this.breadcrumbs);
         break;
       case '/dashboard/transfer':
-        this.breadcrumbs = [{ label: 'Dashboard', url: '/dashboard/transfer' }];
-        console.log(this.breadcrumbs);
+        this.breadcrumbs = [{ label: 'Transfer', url: '/dashboard/transfer' }];
         break;
       case '/dashboard/cards':
-        this.breadcrumbs = [{ label: 'Dashboard', url: '/dashboard/cards' }];
-        console.log(this.breadcrumbs);
+        this.breadcrumbs = [{ label: 'Cards', url: '/dashboard/cards' }];
         break;
       case '/dashboard/bankstatement':
         this.breadcrumbs = [
-          { label: 'Dashboard', url: '/dashboard/bankstatement' },
+          { label: 'Bank Statement', url: '/dashboard/bankstatement' },
         ];
-        console.log(this.breadcrumbs);
         break;
     }
+    this.breadcrumbSubject.next(this.breadcrumbs);
   }
 
   private breadcrumbSubject = new BehaviorSubject<Breadcrumb[]>(
