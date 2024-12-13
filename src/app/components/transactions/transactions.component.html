@@ -1,94 +1,228 @@
-
-   <section class="bg-gray-50 dark:bg-transparent w-full p-3 sm:p-0">
-      <div class="mx-auto max-w-screen-xl px-4 lg:px-0 sm:rounded-lg">
-          <!-- Start coding here -->
-          <div class="w-full bg-white dark:bg-gray-900 relative shadow-md sm:rounded-lg overflow-y-auto overflow-hidden">
-              <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                  <div class="w-full md:w-1/2">
-                      <form class="flex items-center">
-                          <label for="simple-search" class="sr-only">Search</label>
-                          <div class="relative w-full">
-                              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                  <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                      <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                                  </svg>
-                              </div>
-                              <input id="simple-search" type="text" name="searchTerm" [(ngModel)]="searchTerm" (input)="updateFilteredTransactions()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search by Transaction ID,Transaction Type or Date" required="">
-                          </div>
-                      </form>
-                  </div>
-                  
+<div class="max-h-96 mb-4 rounded bg-gray-50 dark:bg-gray-900">
+  <div class="mx-auto max-w-screen-xl px-4 lg:px-0 sm:rounded-lg">
+    <!-- Start coding here -->
+    <div
+      class="w-full bg-white dark:bg-gray-900 relative shadow-md sm:rounded-lg overflow-y-auto overflow-hidden"
+    >
+      <div
+        class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"
+      >
+        <div class="w-full md:w-1/2">
+          <form class="flex items-center">
+            <label for="simple-search" class="sr-only">Search</label>
+            <div class="relative w-full">
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                  fill="currentColor"
+                  viewbox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
               </div>
-              <div class="max-h-96 overflow-x-auto scrollbar-thin dark:scrollbar-thumb-gray-500 dark:scrollbar-track-gray-900 sm:rounded-lg">
-                  <table class="w-full text-sm text-left text-gray-700 dark:text-gray-400">
-                      <thead class="sticky top-0 text-xs z-[9999] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                          <tr>
-                              <th scope="col" class="px-4 py-3">Transaction Id</th>
-                              <th scope="col" class="px-4 py-3">Amount</th>
-                              <th scope="col" class="px-4 py-3">Transaction Type</th>
-                              <th scope="col" class="px-4 py-3">Date</th>
-                              <th scope="col" class="px-4 py-3">Running Balance</th>
-                              <th scope="col" class="px-4 py-3">
-                                  <span class="sr-only">Actions</span>
-                              </th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          
-                          <tr *ngFor="let transaction of filteredTransactions" class="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
-                              <td class="px-4 py-3">{{transaction.transactionId}}</td>
-                              <td class="px-4 py-3">{{transaction.amount}}</td>
-                              <td class="px-4 py-3">{{transaction.transactionType}}</td>
-                              <td class="px-4 py-3">{{getDate(transaction.createdAt ?? '')}}</td>
-                              <td class="px-4 py-3">{{transaction.runningBalance}}</td>
-                              <td class="relative px-4 py-3 flex items-center justify-end">
-                                  <button (click)="handleDelete(transaction.transactionId ?? '')" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-red-600 hover:text-red-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
-                                    <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                  </button>
-                                  
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
-              <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  Showing
-                  <span class="font-semibold text-gray-900 dark:text-white">{{ rangeStart }}-{{ rangeEnd }}</span>
-                  of
-                  <span class="font-semibold text-gray-900 dark:text-white">{{ totalItems }}</span>
-                </span>
-                <ul class="inline-flex items-stretch -space-x-px">
-                  <!-- Previous Button -->
-                  <li>
-                    <span (click)="prevPage()" class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                      <span class="sr-only">Previous</span>
-                      <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </li>
-        
-                  <!-- Page Buttons -->
-                  <li *ngFor="let page of [].constructor(totalPages); let i = index">
-                    <span (click)="setPage(i + 1)" [class]="currentPage === (i + 1) ? 'flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-white bg-blue-700 border border-blue-700 hover:bg-blue-600 dark:border-gray-700 dark:bg-gray-700 dark:text-white' : 'flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'">
-                      {{ i + 1 }}
-                    </span>
-                  </li>
-        
-                  <!-- Next Button -->
-                  <li>
-                    <span (click)="nextPage()" class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                      <span class="sr-only">Next</span>
-                      <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </li>
-                </ul>
-              </nav>
-          </div>
+              <input
+                id="simple-search"
+                type="text"
+                name="searchTerm"
+                [(ngModel)]="searchTerm"
+                (input)="updateFilteredTransactions()"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Search by Transaction ID,Transaction Type or Date"
+                required=""
+              />
+            </div>
+          </form>
+        </div>
+        <button
+            type="button"
+            class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          >
+            New Transaction
+          </button>
       </div>
-      </section>
+      <div
+        class="max-h-96 overflow-x-auto scrollbar-thin dark:scrollbar-thumb-gray-500 dark:scrollbar-track-gray-900 sm:rounded-lg"
+      >
+        <table
+          class="w-full text-sm text-left text-gray-700 dark:text-gray-400"
+        >
+          <thead
+            class="sticky top-0 text-xs z-[500] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="px-4 py-3">Transaction Id</th>
+              <th scope="col" class="px-4 py-3">Amount</th>
+              <th scope="col" class="px-4 py-3">Transaction Type</th>
+              <th scope="col" class="px-4 py-3">Date</th>
+              <th scope="col" class="px-4 py-3">Status</th>
+              <th scope="col" class="px-4 py-3">Running Balance</th>
+              <th scope="col" class="px-4 py-3 z-[0]">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let transaction of filteredTransactions"
+              class="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              <td class="px-4 py-3">{{ transaction.transactionId }}</td>
+              <td class="px-4 py-3">{{ transaction.amount }}</td>
+              <td class="px-4 py-3">{{ transaction.transactionType }}</td>
+              <td class="px-4 py-3">
+                {{ getDate(transaction.createdAt ?? "") }}
+              </td>
+              <td class="px-4 py-3">{{ transaction.status }}</td>
+              <td class="px-4 py-3">{{ transaction.runningBalance }}</td>
+              <td class="relative px-4 py-3 flex items-center justify-end">
+                <button
+                  (click)="handleDelete(transaction.transactionId ?? '')"
+                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-red-600 hover:text-red-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                  type="button"
+                >
+                  <svg
+                    class="mr-1 -ml-1 w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <nav
+        class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
+        aria-label="Table navigation"
+      >
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+          Showing
+          <span class="font-semibold text-gray-900 dark:text-white"
+            >{{ rangeStart }}-{{ rangeEnd }}</span
+          >
+          of
+          <span class="font-semibold text-gray-900 dark:text-white">{{
+            totalItems
+          }}</span>
+        </span>
+        <ul class="inline-flex items-stretch -space-x-px">
+          <!-- Previous Button -->
+          <li>
+            <span
+              (click)="prevPage()"
+              class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              <span class="sr-only">Previous</span>
+              <svg
+                class="w-5 h-5"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </li>
+
+          <!-- Page Buttons -->
+          <li *ngFor="let page of [].constructor(totalPages); let i = index">
+            <span
+              (click)="setPage(i + 1)"
+              [class]="
+                currentPage === i + 1
+                  ? 'flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-white bg-blue-700 border border-blue-700 hover:bg-blue-600 dark:border-gray-700 dark:bg-gray-700 dark:text-white'
+                  : 'flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+              "
+            >
+              {{ i + 1 }}
+            </span>
+          </li>
+
+          <!-- Next Button -->
+          <li>
+            <span
+              (click)="nextPage()"
+              class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              <span class="sr-only">Next</span>
+              <svg
+                class="w-5 h-5"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<div class="grid grid-cols-3 gap-4">
+  <!-- Left Column -->
+  <div
+    class="col-span-3 flex flex-col items-center justify-start rounded bg-gray-50 h-72 dark:bg-gray-900"
+  >
+    <!-- Heading -->
+    <h5
+      class="mt-2 mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-700 md:text-2xl dark:text-gray-200"
+    >
+      Statistics
+    </h5>
+    <!-- Chart -->
+    <div class="w-full flex justify-center">
+      <apx-chart
+        *ngIf="chartOptions"
+        [series]="chartOptions.series ?? []"
+        [chart]="chartOptions.chart ?? { type: 'donut' }"
+        [labels]="chartOptions.labels"
+        [responsive]="chartOptions.responsive ?? []"
+      ></apx-chart>
+      <apx-chart
+        *ngIf="chartOptionsDate"
+        [series]="chartOptionsDate.series ?? []"
+        [chart]="chartOptionsDate.chart ?? { type: 'donut' }"
+        [labels]="chartOptionsDate.labels"
+        [responsive]="chartOptionsDate.responsive ?? []"
+      ></apx-chart>
+      <apx-chart
+      *ngIf="chartOptionsAmount"
+      [series]="chartOptionsAmount.series ?? []"
+      [chart]="chartOptionsAmount.chart ?? { type: 'donut' }"
+      [labels]="chartOptionsAmount.labels"
+      [responsive]="chartOptionsAmount.responsive ?? []"
+  ></apx-chart>
+    </div>
+    <div class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+      <p>(a) Payment Types with total amounts (b) Quarterly Transaction Volume (c) Amount Spent Quarterly</p>
+    </div>
+  </div> 
   
- 
+</div>

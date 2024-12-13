@@ -7,6 +7,8 @@ import { Login } from '../model/login';
 import { PasswordUpdate } from '../model/password-update';
 import { User } from '../model/user';
 import { Transaction } from '../model/transaction';
+import { CreditDebitRequest } from '../model/credit-debit';
+import { TransferRequest } from '../model/transfer-request';
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +49,17 @@ export class UserService {
 
   deleteTransaction(transactionId:string):Observable<BankResponse>{
     return this.http.delete<BankResponse>(this.apiUrl+'transactions/'+transactionId);
+  }
+
+  creditTransaction(creditRequest:CreditDebitRequest):Observable<BankResponse>{
+    return this.http.post<BankResponse>(this.apiUrl+'credit',creditRequest);
+  }
+
+  debitTransaction(debitRequest:CreditDebitRequest):Observable<BankResponse>{
+    return this.http.post<BankResponse>(this.apiUrl+'debit',debitRequest);
+  }
+  
+  transferTransaction(transferRequest:TransferRequest):Observable<BankResponse>{
+    return this.http.post<BankResponse>(this.apiUrl+'debit',transferRequest);
   }
 }

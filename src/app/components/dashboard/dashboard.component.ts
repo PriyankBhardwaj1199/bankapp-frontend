@@ -55,11 +55,6 @@ export class DashboardComponent {
         this.breadcrumbService.addBreadcrumb({ label: 'Transactions', url: '/dashboard/transactions' });
         this.router.navigate(['/dashboard/transactions']);
         break;
-      case 'Transfer':
-        this.breadcrumbService.clearBreadcrumbs();
-        this.breadcrumbService.addBreadcrumb({ label: 'Transfer', url: '/dashboard/transfer' });
-        this.router.navigate(['/dashboard/transfer']);
-        break;
       case 'Bank Statement':
         this.breadcrumbService.clearBreadcrumbs();
         this.breadcrumbService.addBreadcrumb({ label: 'Bank Statements', url: '/dashboard/bankstatement' });

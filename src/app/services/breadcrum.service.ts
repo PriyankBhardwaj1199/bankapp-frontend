@@ -32,9 +32,6 @@ export class BreadcrumService {
           { label: 'Transactions', url: '/dashboard/transactions' },
         ];
         break;
-      case '/dashboard/transfer':
-        this.breadcrumbs = [{ label: 'Transfer', url: '/dashboard/transfer' }];
-        break;
       case '/dashboard/cards':
         this.breadcrumbs = [{ label: 'Cards', url: '/dashboard/cards' }];
         break;

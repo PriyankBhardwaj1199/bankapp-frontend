@@ -8,7 +8,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserComponent } from './components/user/user.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
-import { TransferComponent } from './components/transfer/transfer.component';
 import { BankstatementComponent } from './components/bankstatement/bankstatement.component';
 import { CardsComponent } from './components/cards/cards.component';
 import { AdminComponent } from './components/admin/admin.component';
@@ -30,7 +29,6 @@ export const routes: Routes = [
             { path: 'admin-dashboard', component: AdminComponent,canActivate: [authGuard] },
             { path: 'accounts', component: AccountsComponent,canActivate: [authGuard] },
             { path: 'transactions', component: TransactionsComponent,canActivate: [authGuard] },
-            { path: 'transfer', component: TransferComponent,canActivate: [authGuard] },
             { path: 'bankstatement', component: BankstatementComponent,canActivate: [authGuard] },
             { path: 'cards', component: CardsComponent,canActivate: [authGuard] }
           ]
