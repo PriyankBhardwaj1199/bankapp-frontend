@@ -19,11 +19,12 @@ import { BankstatementService } from '../../services/bankstatement.service';
 import { BankStatement } from '../../model/bank-statement';
 import { AlertService } from '../../services/alert.service';
 import { UserDto } from '../../model/userdto';
+import { TransferFilterPipe } from "../../pipes/transfer-filter.pipe";
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [NgIf, NgFor, ReactiveFormsModule, CommonModule],
+  imports: [NgIf, NgFor, ReactiveFormsModule, CommonModule, TransferFilterPipe],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
 })
@@ -147,7 +148,7 @@ export class UserComponent {
       .fetchTransactions(localStorage.getItem('accountNumber') ?? '')
       .subscribe(
         (response) => {
-          this.transactions = response.slice(0,3);
+          this.transactions = response;
           this.transferCount = this.transactions.filter(
             (transaction) => transaction.transactionType === 'Transfer'
           ).length;
@@ -386,4 +387,8 @@ export class UserComponent {
 
     return `${years} year(s) and ${months} month(s)`;
   }
+
+  transactionFilterFn = (transaction: any) => {
+    return transaction.transactionType === 'Transfer';
+  };
 }

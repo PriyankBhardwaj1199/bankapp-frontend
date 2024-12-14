@@ -16,4 +16,8 @@ export class BankstatementService {
     return this.http.get<BankStatement[]>(this.apiUrl+accountNumber);
   }
 
+  downloadStatement(accountNumber:string,id:number):Observable<Blob>{
+    return this.http.get<Blob>(this.apiUrl+"download/"+accountNumber+"/"+id,{ responseType: 'blob' as 'json' });
+  }
+
 }

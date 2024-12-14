@@ -1,10 +1,10 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Transaction } from '../../model/transaction';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import {
   ApexNonAxisChartSeries,
   ApexResponsive,
@@ -16,6 +16,8 @@ import {
   ApexPlotOptions,
   ApexYAxis
 } from 'ng-apexcharts';
+import { CreditDebitRequest } from '../../model/credit-debit';
+import { TransferRequest } from '../../model/transfer-request';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -36,12 +38,13 @@ export type BarChartOptions = {
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [NgFor, NgIf,ReactiveFormsModule, FormsModule, NgApexchartsModule],
+  imports: [NgFor, NgIf,NgClass,ReactiveFormsModule, FormsModule, NgApexchartsModule],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.css',
 })
 export class TransactionsComponent implements OnInit {
   
+  showTransactionModal:boolean = false;
   transactions: Transaction[] = [];
   currentPage: number = 1; // The current page
   itemsPerPage: number = 6; // Items per page
@@ -52,7 +55,9 @@ export class TransactionsComponent implements OnInit {
   deposits: number = 0;
   withdrawals: number = 0;
   selectedOption!:string;
-  
+  creditDebitDto:CreditDebitRequest = new CreditDebitRequest();
+  transferDto:TransferRequest = new TransferRequest();
+  filteredTransactions: any[] = [];
   transactionForm!:FormGroup;
   
   @ViewChild('chart') chart!: ChartComponent;
@@ -60,7 +65,7 @@ export class TransactionsComponent implements OnInit {
   public chartOptionsDate!: Partial<ChartOptions>; 
   public chartOptionsAmount!: Partial<ChartOptions>; 
   
-  filteredTransactions: any[] = [];
+  
   constructor(
     private userService: UserService,
     private alertService: AlertService,
@@ -68,18 +73,44 @@ export class TransactionsComponent implements OnInit {
     private formBuilder:FormBuilder
   ) {
     this.transactionForm = this.formBuilder.group({
-      accountNumber:['',[Validators.required]],
-      amount:[0,[Validators.required]],
-      destinationAccountNumber:['',[Validators.required]],
+      amount:['',[Validators.required]],
+      destinationAccountNumber:[''],
       transactionType:['',[Validators.required]]
     });
    
     this.transactionForm.get('transactionType')?.valueChanges.subscribe((value) => {
+      const recipientControl = this.transactionForm.get('destinationAccountNumber');
       this.selectedOption = value;
+      if (value === 'Transfer') {
+        recipientControl?.setValidators([Validators.required,this.accountNumberValidator,Validators.minLength(12),Validators.maxLength(12)]);
+      } else {
+        recipientControl?.clearValidators();
+      }
+      recipientControl?.updateValueAndValidity(); // Recalculate the validation status
     });
   }
 
+  accountNumberValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value || '';
+
+    const errors: ValidationErrors = {};
+    
+    // Rule 1: First 2 characters should be letters
+    if (!/^[A-Za-z]{2}/.test(value)) {
+      errors['noLetterStarting'] = 'First two letters of the account number should be alphabets';
+    }
+
+    // Rule 2: 10 digits
+    if (!/\d{10}$/.test(value)) {
+      errors['noTenDigit'] = 'Account number must contain 10 digits';
+    }
+
+
+    return Object.keys(errors).length ? errors : null;
+  }
+
   ngOnInit(): void {
+
     this.userService
       .fetchTransactions(localStorage.getItem('accountNumber') ?? '')
       .subscribe(
@@ -288,7 +319,7 @@ export class TransactionsComponent implements OnInit {
 
   // Method to handle page change
   setPage(page: number) {
-    this.currentPage = page;
+    this.currentPage = page;  
   }
 
   // Handle previous page
@@ -315,10 +346,8 @@ export class TransactionsComponent implements OnInit {
 
   // filter funtionality
   get filteredTransactionsList(): any[] {
-    return this.filteredTransactions.slice(
-      (this.currentPage - 1) * this.itemsPerPage,
-      this.currentPage * this.itemsPerPage
-    );
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredTransactions.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   // Update filteredTransactions when the search term changes
@@ -342,7 +371,101 @@ export class TransactionsComponent implements OnInit {
   }
 
   onSubmit(){
+    if(this.transactionForm.valid){
+      
+      if(this.transactionForm.get('transactionType')?.value==='Transfer'){
+        this.transferDto.sourceAccountNumber = localStorage.getItem('accountNumber') ?? '';
+        this.transferDto.destinationAccountNumber = this.transactionForm.get('destinationAccountNumber')?.value;
+        this.transferDto.amount = this.transactionForm.get('amount')?.value;
+        
+        this.userService.transferTransaction(this.transferDto).subscribe((response)=>{          
+          if(response.responseCode===200){
+            this.alertService.showAlert(response.responseMessage,'success');
+          } else {
+            this.alertService.showAlert(response.responseMessage,'error');
+          }
+          this.showTransactionModal=!this.showTransactionModal
+          setTimeout(() => {
+            window.location.reload()
+            
+          }, 3000);
+        },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+            this.router.navigate(['/login']);
+          }
+        })
+      } else if(this.transactionForm.get('transactionType')?.value==='Credit'){
+        this.creditDebitDto.accountNumber = localStorage.getItem('accountNumber') ?? '';
+        this.creditDebitDto.amount = this.transactionForm.get('amount')?.value;
 
+        this.userService.creditTransaction(this.creditDebitDto).subscribe((response)=>{
+          if(response.responseCode===200){
+            this.alertService.showAlert(response.responseMessage,'success');
+          } else {
+            this.alertService.showAlert(response.responseMessage,'error');
+          }
+          this.showTransactionModal=!this.showTransactionModal
+          
+          setTimeout(() => {
+            window.location.reload()
+            
+          }, 3000);
+        },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+            this.router.navigate(['/login']);
+          }
+        })
+      } else {
+        this.creditDebitDto.accountNumber = localStorage.getItem('accountNumber') ?? '';
+        this.creditDebitDto.amount = this.transactionForm.get('amount')?.value;
+
+        this.userService.debitTransaction(this.creditDebitDto).subscribe((response)=>{
+          if(response.responseCode===200){
+            this.alertService.showAlert(response.responseMessage,'success');
+          } else {
+            this.alertService.showAlert(response.responseMessage,'error');
+          }
+          this.showTransactionModal=!this.showTransactionModal
+          setTimeout(() => {
+            window.location.reload()
+          }, 3000);
+        },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+            this.router.navigate(['/login']);
+          }
+        })
+      }
+    }
   }
 
   allowOnlyNumbers(event: KeyboardEvent): void {
@@ -350,5 +473,16 @@ export class TransactionsComponent implements OnInit {
     if (!/^[0-9]$/.test(event.key) && !allowedKeys.includes(event.key)) {
       event.preventDefault();
     }
+  }
+
+  allowOnlyAlphanumeric(event: KeyboardEvent): void {
+    const allowedKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'];
+    if (!/^[a-zA-Z0-9]$/.test(event.key) && !allowedKeys.includes(event.key)) {
+      event.preventDefault();
+    }
+  }
+
+  toggleTransactionModal(){
+    this.showTransactionModal = !this.showTransactionModal;
   }
 }

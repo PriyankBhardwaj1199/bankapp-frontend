@@ -60,6 +60,6 @@ export class UserService {
   }
   
   transferTransaction(transferRequest:TransferRequest):Observable<BankResponse>{
-    return this.http.post<BankResponse>(this.apiUrl+'debit',transferRequest);
+    return this.http.post<BankResponse>(this.apiUrl+'transfer',transferRequest);
   }
 }

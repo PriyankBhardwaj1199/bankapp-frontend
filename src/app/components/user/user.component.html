@@ -619,7 +619,7 @@
       <!-- Timeline items -->
       <div class="border-l-4 border-green-500 dark:border-blue-200 pl-4">
         <!-- Timeline Item 1 -->
-        <div *ngFor="let transaction of transactions" class="mb-4 flex items-center">
+        <div *ngFor="let transaction of transactions | slice:0:3" class="mb-4 flex items-center">
           <div
             class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
           ></div>
@@ -657,13 +657,13 @@
       Transfers
     </h2>
     <div *ngIf="transferCount>0" class="relative mt-3">
-        <div *ngFor="let transaction of transactions;">
-          <div *ngIf="transaction.transactionType=='Transfer'" class="mb-4 flex items-center">
+        <div *ngFor="let transaction of (transactions | transferFilter: transactionFilterFn | slice: 0:3);">
+          <div class="mb-4 flex items-center">
   
-            <div *ngIf="transaction.transactionType=='Transfer'"
+            <div
                class="h-3 w-3 bg-green-500 dark:bg-blue-200 rounded-full mr-4"
             ></div>
-              <div *ngIf="transaction.transactionType=='Transfer'">
+              <div>
                 <div>
                   <p class="text-sm text-gray-700 dark:text-gray-300">
                     {{getDate(transaction.createdAt ?? '') }}

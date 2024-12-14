@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { SliderComponent } from '../slider/slider.component';
 import { NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [SliderComponent,NgIf,RouterLink],
+  imports: [SliderComponent,NgIf,RouterLink,RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
