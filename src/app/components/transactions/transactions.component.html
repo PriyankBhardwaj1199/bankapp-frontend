@@ -327,6 +327,9 @@
               </button>
             </td>
           </tr>
+          <tr *ngIf="filteredTransactionsList.length===0" colspan="7" class="px-4 py-3">
+            No Transactions Found.
+        </tr>
         </tbody>
       </table>
     </div>

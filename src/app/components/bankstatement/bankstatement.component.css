@@ -1,0 +1,12 @@
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  -webkit-appearance: none;
+}
+
+input[type="date"]::placeholder {
+  opacity: 0;
+}
+input[type="date"] {
+  width: 100%; /* Ensure the input is wide enough */
+ 
+}
