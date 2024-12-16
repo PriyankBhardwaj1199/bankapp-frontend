@@ -10,5 +10,6 @@ module.exports = {
       charts: true,
     }),
     require('tailwind-scrollbar'),
+    require('tailwindcss-filters'),
   ],
 };

@@ -1,0 +1,24 @@
+.perspective {
+    perspective: 1000px; /* This creates a 3D perspective for the flip effect */
+  }
+  
+  .transform-style-preserve-3d {
+    transform-style: preserve-3d; /* Ensures the 3D transform effect is preserved during the flip */
+  }
+  
+  .group:hover .rotate-y-180 {
+    transform: rotateY(180deg); /* Rotates the element 180 degrees along the Y-axis when hovered */
+  }
+  
+  .group:hover .backface-hidden {
+    visibility: hidden; /* Hides the back face of the element when flipped */
+  }
+  
+  /* For the card back side */
+  .backface-hidden {
+    backface-visibility: hidden; /* Ensures the back side of the card is hidden when not flipped */
+  }
+  
+  .rotate-y-180 {
+    transform: rotateY(180deg); /* Initially rotates the back card 180 degrees to hide it */
+  }

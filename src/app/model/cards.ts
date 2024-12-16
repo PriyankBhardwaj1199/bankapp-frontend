@@ -8,4 +8,5 @@ export class Cards{
     public cardStatus:string | undefined;
     public issuedDate:string | undefined;
     public expiryDate:string | undefined;
+   
 }
