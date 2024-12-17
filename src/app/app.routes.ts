@@ -22,7 +22,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'home', component: HeroComponent},
     { path: 'services', component: FeaturesComponent},
-    { path: 'password-update', component: UpdatePasswordComponent,canActivate: [authGuard]},
+    { path: 'password-update', component: UpdatePasswordComponent},
     { path: 'dashboard', component: DashboardComponent,canActivate: [authGuard],
         children: [
             { path: 'user-dashboard', component: UserComponent,canActivate: [authGuard] },

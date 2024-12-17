@@ -1,25 +1,224 @@
-<div
-  class="flex flex-row items-center gap-4 justify-center h-96 mb-4 rounded bg-gray-50 dark:bg-transparent"
->
+<div class="mt-4 h-auto mb-4 rounded bg-gray-50 dark:bg-transparent">
+  <div
+    *ngIf="hasCards"
+    class="w-full bg-white dark:bg-gray-900 relative shadow-md sm:rounded-lg overflow-hidden"
+  >
+    <div
+      class="max-h-96 overflow-hidden scrollbar-thin dark:scrollbar-thumb-gray-500 dark:scrollbar-track-gray-900 sm:rounded-lg"
+    >
+      <table class="w-full text-sm text-left text-gray-700 dark:text-gray-400">
+        <thead
+          class="top-0 text-xs z-[500] text-gray-700 uppercase bg-gray-50 dark:bg-gray-600 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-4 py-3">Card ID</th>
+            <th scope="col" class="px-4 py-3">Card Type</th>
+            <th scope="col" class="px-4 py-3 z-[0]">Card Sub Type</th>
+            <th scope="col" class="px-4 py-3 z-[0]">Card Number</th>
+            <!-- <th scope="col" class="px-4 py-3 z-[0]">Card Issued Date</th> -->
+            <th scope="col" class="px-4 py-3 z-[0]">Card Expiry Date</th>
+            <th scope="col" class="px-4 py-3 z-[0]">Pin Status</th>
+            <th scope="col" class="px-4 py-3 z-[0]">Card Status</th>
+            <th scope="col" class="px-4 py-3 z-[0]">
+              <span class="sr-only">Actions</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let card of userCards; let i = index"
+            class="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            <td class="px-4 py-3">{{ card.id }}</td>
+            <td class="px-4 py-3">{{ card.cardType }}</td>
+            <td class="px-4 py-3">{{ card.cardSubType }}</td>
+            <td class="px-4 py-3">{{ card.cardNumber }}</td>
+            <!-- <td class="px-4 py-3">{{ getDate(card.issuedDate ?? "") }}</td> -->
+            <td class="px-4 py-3">{{ getDate(card.expiryDate ?? "") }}</td>
+            <td class="px-4 py-3">{{ card.pinStatus }}</td>
+            <td class="px-4 py-3">{{ card.cardStatus }}</td>
+            <td class="px-4 py-3">
+              <button
+                (click)="toggleActionDropdown(i)"
+                id="apple-iphone-14-dropdown-button"
+                data-dropdown-toggle="apple-iphone-14-dropdown"
+                class="relative inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                type="button"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewbox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+                  />
+                </svg>
+              </button>
+              <div
+                *ngIf="showActionDropdown[i]"
+                id="apple-iphone-14-dropdown"
+                class="absolute right-1 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+              >
+                <ul
+                  class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                  aria-labelledby="apple-iphone-14-dropdown-button"
+                >
+                  <li *ngIf="card.pinStatus !== 'GENERATED'">
+                    <a
+                      href="#"
+                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Generate Pin</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Block</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Revoke</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="userCards.length === 0" colspan="9" class="px-4 py-3">
+            No Cards to display.
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <nav
+      class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
+      aria-label="Table navigation"
+    >
+      <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+        Showing
+        <span class="font-semibold text-gray-900 dark:text-white"
+          >{{ rangeStart }}-{{ rangeEnd }}</span
+        >
+        of
+        <span class="font-semibold text-gray-900 dark:text-white">{{
+          totalItems
+        }}</span>
+      </span>
+      <ul class="inline-flex items-stretch -space-x-px">
+        <!-- Previous Button -->
+        <li>
+          <span
+            (click)="prevPage()"
+            class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            <span class="sr-only">Previous</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </li>
+
+        <!-- Page Buttons -->
+        <li *ngFor="let page of [].constructor(totalPages); let i = index">
+          <span
+            (click)="setPage(i + 1)"
+            [class]="
+              currentPage === i + 1
+                ? 'flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-white bg-blue-700 border border-blue-700 hover:bg-blue-600 dark:border-gray-700 dark:bg-gray-700 dark:text-white'
+                : 'flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+            "
+          >
+            {{ i + 1 }}
+          </span>
+        </li>
+
+        <!-- Next Button -->
+        <li>
+          <span
+            (click)="nextPage()"
+            class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            <span class="sr-only">Next</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div
+    class="flex flex-row items-center gap-4 h-64 pr-4 mt-6 rounded bg-slate-100 dark:bg-gray-700"
+    [ngClass]="{
+      'justify-center': !hasCards,
+      'justify-end': userCards.length > 0
+    }"
+  >
+    <div
+      class="flex flex-1 flex-col justify-start h-64 p-4"
+      [ngClass]="{ 'flex-none': !hasCards }"
+    >
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
+        Your Cards
+      </h2>
+
+      <h3 class="text-base font-medium mb-2 text-gray-800 dark:text-gray-100">
+        Card Benefits
+      </h3>
+      <ul class="list-disc list-inside text-gray-800 dark:text-gray-100">
+        <li>Zero annual fees for the first year</li>
+        <li>1.5% cashback on all purchases</li>
+        <li>Exclusive access to airport lounges</li>
+        <li>24/7 customer support</li>
+        <li>Free fraud protection up to {{ 1000 | currency : "INR" }}</li>
+        <li>Special discounts on partner stores</li>
+      </ul>
+    </div>
 
     <div
       class="relative w-96 h-56 perspective"
-      *ngFor="let card of userCards"
-      (click)="flipCard()"
+      *ngFor="let card of userCards; let i = index"
+      (click)="flipCard(i)"
     >
       <div
         class="absolute w-full h-full transform transition-transform duration-700"
-        [ngClass]="{
-          'rotate-y-180': backSide,
-          'backface-hidden': !frontSide
-        }"
+        [ngClass]="{ 'rotate-y-180': flippedCards[i] }"
         style="transform-style: preserve-3d"
       >
         <div
           class="w-full h-full bg-gradient-to-r bg-opacity-50 backdrop-blur-lg text-white rounded-xl shadow-lg p-6"
-          [ngClass]="{'from-green-400 to-teal-500':card.cardType==='Debit',
+          [ngClass]="{
+            'from-green-400 to-teal-500': card.cardType === 'Debit',
             'from-blue-500 to-purple-600': card.cardType === 'Credit'
           }"
+          style="backface-visibility: hidden"
         >
           <div class="flex justify-between items-center">
             <div class="text-lg font-bold">{{ card.cardType }} Card</div>
@@ -32,7 +231,7 @@
           <div class="mt-8">
             <div class="text-sm font-semibold tracking-widest">Card Number</div>
             <div class="text-xl font-mono tracking-widest mt-1">
-              {{  formatCardNumber(card.cardNumber ?? '') }}
+              {{ formatCardNumber(card.cardNumber ?? "") }}
             </div>
           </div>
           <div class="mt-4 flex justify-between">
@@ -42,7 +241,9 @@
             </div>
             <div>
               <div class="text-sm font-semibold">Expiry</div>
-              <div class="text-base font-medium">{{ getDate(card.expiryDate??'') }}</div>
+              <div class="text-base font-medium">
+                {{ getDate(card.expiryDate ?? "") }}
+              </div>
             </div>
           </div>
           <div class="absolute top-16 left-6 text-xs italic opacity-75">
@@ -52,16 +253,15 @@
 
         <div
           class="absolute top-0 left-0 w-full h-full"
-          [ngClass]="{
-            'rotate-y-180': !flipped,
-            'backface-hidden': frontSide
-          }"
+          [ngClass]="{ 'rotate-y-180': flippedCards[i] }"
+          style="backface-visibility: hidden; transform: rotateY(180deg)"
         >
           <div
             class="w-full h-full bg-gradient-to-r text-white rounded-xl shadow-lg p-6"
-            [ngClass]="{'from-green-400 to-teal-500':card.cardType==='Debit',
-            'from-blue-500 to-purple-600': card.cardType === 'Credit'
-          }"
+            [ngClass]="{
+              'from-green-400 to-teal-500': card.cardType === 'Debit',
+              'from-blue-500 to-purple-600': card.cardType === 'Credit'
+            }"
           >
             <div class="bg-black h-8 w-full rounded-md mb-4"></div>
             <div class="flex justify-between items-center">
@@ -80,264 +280,572 @@
         </div>
       </div>
     </div>
-</div>
 
-<div class="grid grid-cols-3 gap-4 mb-4">
-  <div
-    class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
-  </div>
-  <div
-    class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
-  </div>
-  <div
-    class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
-  </div>
-</div>
-
-<div class="grid grid-cols-2 gap-4 mb-4">
-  <div
-    class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
-  </div>
-  <div
-    class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
-  </div>
-  <div
-    class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
-  </div>
-  <div
-    class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
-  </div>
-</div>
-<div
-  class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-400"
->
-  <p class="text-2xl text-gray-400 dark:text-gray-500">
-    <svg
-      class="w-3.5 h-3.5"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 18 18"
+    <div
+      *ngIf="!hasCards || userCards.length == 1"
+      class="flex flex-col items-center justify-center h-64 bg-slate-100 dark:bg-gray-700 rounded-lg"
+      [ngClass]="{ 'flex-1': !hasCards }"
     >
-      <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M9 1v16M1 9h16"
-      />
-    </svg>
-  </p>
-</div>
-<div class="grid grid-cols-2 gap-4">
-  <div
-    class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
+      <div class="mb-4">
+        <svg
+          class="w-16 h-16 text-gray-800 dark:text-gray-400"
+          fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
           stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4.75l7 6V19a2 2 0 01-2 2H7a2 2 0 01-2-2v-8.25l7-6z"
+          ></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M16 21v-6a2 2 0 00-4 0v6"
+          ></path>
+        </svg>
+      </div>
+      <!-- Message -->
+      <p class="text-lg text-gray-800 dark:text-gray-300 mb-2">
+        {{
+          hasCards
+            ? userCards.length == 1 && userCards[0].cardType == "Debit"
+              ? "No credit card issued yet"
+              : "No debit card issued yet"
+            : "No cards issued yet"
+        }}
+      </p>
+      <p class="text-sm text-gray-800 dark:text-gray-400 mb-4">
+        Start by applying for your
+        {{
+          hasCards
+            ? userCards.length == 1 && userCards[0].cardType == "Debit"
+              ? "credit"
+              : "debit"
+            : ""
+        }}
+        card and unlock exclusive benefits.
+      </p>
+      <!-- Action Button -->
+      <button
+        type="button"
+        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+      >
+        Apply for
+        {{
+          hasCards
+            ? userCards.length == 1 && userCards[0].cardType == "Debit"
+              ? "Credit"
+              : "Debit"
+            : ""
+        }}
+        Card
+      </button>
+    </div>
   </div>
-  <div
-    class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
-  </div>
-  <div
-    class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
-  </div>
-  <div
-    class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400"
-  >
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <svg
-        class="w-3.5 h-3.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-    </p>
+  <div class="h-auto mt-6 mb-4 rounded bg-slate-50 dark:bg-gray-900">
+    <div id="detailed-pricing" class="w-full overflow-x-auto">
+      <div class="overflow-hidden min-w-max">
+        <div
+          class="grid grid-cols-3 p-4 text-sm font-medium text-white bg-slate-700 border-t border-b border-gray-200 gap-x-16 dark:bg-gray-700 dark:border-gray-700 dark:text-white"
+        >
+          <div class="flex items-center">Benefit</div>
+          <div>Debit Card</div>
+          <div>Credit Card</div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">Credit Limit</div>
+          <div>
+            <svg
+              class="w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">
+            Spending Flexibility
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">
+            Earn Rewards (e.g., points, cashback)
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">
+            Purchase Protection
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">Build Credit Score</div>
+          <div>
+            <svg
+              class="w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">
+            No Need to Deposit Funds in Advance
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">
+            Interest-Free Period
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">Overdraft Fees</div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">
+            Security (Fraud Protection)
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">
+            Easy to Access Funds
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">
+            Online purchase convinience
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              class="w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-3 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700"
+        >
+          <div class="text-gray-800 dark:text-gray-400">Annual Fees</div>
+          <div>
+            <svg
+              class="inline-block w-3 h-3 text-red-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <p class="ml-2 inline-block text-gray-800 dark:text-gray-400">
+              (usually no fee)
+            </p>
+          </div>
+          <div>
+            <svg
+              class="inline-block w-3 h-3 text-green-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 16 12"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5.917 5.724 10.5 15 1.5"
+              />
+            </svg>
+            <p class="ml-2 inline-block text-gray-800 dark:text-gray-400">
+              (can be high)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
