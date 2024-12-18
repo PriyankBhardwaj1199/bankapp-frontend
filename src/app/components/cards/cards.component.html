@@ -1,5 +1,286 @@
 <div class="mt-4 h-auto mb-4 rounded bg-gray-50 dark:bg-transparent">
   <div
+    *ngIf="showApplyModal"
+    tabindex="-1"
+    aria-hidden="true"
+    class="backdrop-blur-md overflow-y-auto overflow-x-hidden fixed z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full"
+  >
+    <div
+      class="relative translate-y-12 translate-x-[150%] p-4 w-96 max-w-4xl h-full md:h-auto"
+    >
+      <!-- Modal content -->
+      <div
+        class="relative p-4 bg-gray-100 rounded-lg shadow dark:bg-gray-600 sm:p-5"
+      >
+        <!-- Modal header -->
+        <div
+          class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600"
+        >
+          <h3
+            class="text-lg uppercase ml-auto font-semibold text-gray-900 dark:text-white"
+          >
+            Apply
+          </h3>
+          <button
+            (click)="toggleApplyModal(appliedCard)"
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="updateProductModal"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form
+          (ngSubmit)="applyCard();toggleApplyModal(appliedCard)"
+          [formGroup]="applyCardForm"
+          autocomplete="off"
+        >
+          <div class="grid gap-3 mb-6 justify-center">
+            <div>
+              <label
+                for="cardType"
+                class="block text-sm/6 font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
+                >Card Type</label
+              >
+              <div class="mt-2">
+                <select
+                  id="cardType"
+                  name="cardType"
+                  formControlName="cardType"
+                  required
+                  class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option value="" selected>Select Type</option>
+                  <option value="Debit">Debit</option>
+                  <option value="Credit">Credit</option>
+                </select>
+              </div>
+              <div
+                *ngIf="
+                  applyCardForm?.get('cardType')?.invalid &&
+                  (applyCardForm?.get('cardType')?.dirty ||
+                    applyCardForm?.get('cardType')?.touched)
+                "
+                class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+                role="alert"
+              >
+                <div
+                  *ngIf="applyCardForm?.get('cardType')?.errors?.['required']"
+                  class="font-medium text-nowrap"
+                >
+                  * Card type is required.
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="cardSubType"
+                class="block text-sm/6 font-medium text-gray-900 dark:text-white after:content-['\00a0*'] after:text-red-800 dark:after:text-red-500"
+                >Card Type</label
+              >
+              <div class="mt-2">
+                <select
+                  id="cardSubType"
+                  name="cardSubType"
+                  formControlName="cardSubType"
+                  required
+                  class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option value="" selected>Select Sub Type</option>
+                  <option value="Visa">Visa</option>
+                  <option value="MasterCard">MasterCard</option>
+                  <option value="RuPay">RuPay</option>
+                </select>
+              </div>
+              <div
+                *ngIf="
+                  applyCardForm?.get('cardSubType')?.invalid &&
+                  (applyCardForm?.get('cardSubType')?.dirty ||
+                    applyCardForm?.get('cardSubType')?.touched)
+                "
+                class="p-1.5 text-sm text-red-800 rounded-lg bg-transparent dark:text-red-400"
+                role="alert"
+              >
+                <div
+                  *ngIf="applyCardForm?.get('cardSubType')?.errors?.['required']"
+                  class="font-medium text-nowrap"
+                >
+                  * Card sub type is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-center space-x-4">
+            <button
+              type="submit"
+              [disabled]="applyCardForm.invalid"
+              [ngClass]="{
+                'cursor-not-allowed opacity-50': applyCardForm.invalid,
+              }"
+              class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              (click)="toggleApplyModal(appliedCard)"
+              class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="showPinModal"
+    tabindex="-1"
+    aria-hidden="true"
+    class="backdrop-blur-md overflow-y-auto overflow-x-hidden fixed z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full"
+  >
+    <div
+      class="relative translate-y-12 translate-x-[150%] p-4 w-96 max-w-4xl h-full md:h-auto"
+    >
+      <!-- Modal content -->
+      <div
+        class="relative p-4 bg-gray-100 rounded-lg shadow dark:bg-gray-600 sm:p-5"
+      >
+        <!-- Modal header -->
+        <div
+          class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600"
+        >
+          <h3
+            class="text-lg uppercase ml-auto font-semibold text-gray-900 dark:text-white"
+          >
+            Generate Pin
+          </h3>
+          <button
+            (click)="togglePinModal(selectedCard)"
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="updateProductModal"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form
+          (ngSubmit)="generatePin(selectedCard); togglePinModal(selectedCard)"
+          [formGroup]="generatePinForm"
+          autocomplete="off"
+        >
+          <div
+            formGroupName="pin"
+            class="flex justify-center mb-2 space-x-2 rtl:space-x-reverse"
+          >
+            <div>
+              <label for="code-1" class="sr-only">First code</label>
+              <input
+                type="text"
+                id="code-1"
+                maxlength="1"
+                formControlName="digit1"
+                (input)="onInputChange($event, 'code-2')"
+                (keydown)="onKeyDown($event, null)"
+                class="block w-9 h-9 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required
+              />
+            </div>
+            <div>
+              <label for="code-2" class="sr-only">Second code</label>
+              <input
+                type="text"
+                id="code-2"
+                maxlength="1"
+                formControlName="digit2"
+                (input)="onInputChange($event, 'code-3')"
+                (keydown)="onKeyDown($event, 'code-1')"
+                class="block w-9 h-9 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required
+              />
+            </div>
+            <div>
+              <label for="code-3" class="sr-only">Third code</label>
+              <input
+                type="text"
+                id="code-3"
+                maxlength="1"
+                formControlName="digit3"
+                (input)="onInputChange($event, 'code-4')"
+                (keydown)="onKeyDown($event, 'code-2')"
+                class="block w-9 h-9 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required
+              />
+            </div>
+            <div>
+              <label for="code-4" class="sr-only">Fourth code</label>
+              <input
+                type="text"
+                id="code-4"
+                maxlength="1"
+                formControlName="digit4"
+                (input)="onInputChange($event, null)"
+                (keydown)="onKeyDown($event, 'code-3')"
+                class="block w-9 h-9 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required
+              />
+            </div>
+          </div>
+          <div class="flex items-center justify-center space-x-4">
+            <button
+              type="submit"
+              [disabled]="generatePinForm.invalid"
+              [ngClass]="{
+                'cursor-not-allowed opacity-50': generatePinForm.invalid,
+              }"
+              class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              (click)="togglePinModal(selectedCard)"
+              class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div
     *ngIf="hasCards"
     class="w-full bg-white dark:bg-gray-900 relative shadow-md sm:rounded-lg overflow-hidden"
   >
@@ -67,25 +348,28 @@
                   aria-labelledby="apple-iphone-14-dropdown-button"
                 >
                   <li *ngIf="card.pinStatus !== 'GENERATED'">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Generate Pin</a
+                    <button
+                      (click)="togglePinModal(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
+                      Generate Pin
+                    </button>
                   </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Block</a
+                  <li *ngIf="card.cardStatus !== 'BLOCKED'">
+                    <button
+                      (click)="blockCard(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
+                      Block
+                    </button>
                   </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Revoke</a
+                  <li *ngIf="card.cardStatus === 'BLOCKED'">
+                    <button
+                      (click)="unblockCard(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
+                      Un-Block
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -222,6 +506,13 @@
         >
           <div class="flex justify-between items-center">
             <div class="text-lg font-bold">{{ card.cardType }} Card</div>
+            <div class="absolute uppercase top-[6.5rem] left-[21rem] -rotate-90 text-base font-bold italic opacity-75"
+            [ngClass]="{'text-xs top-[6.6rem] left-[19.8rem]':card.cardSubType==='MasterCard',
+              'left-[20.6rem]':card.cardSubType==='RuPay'
+            }"
+            >
+              {{card.cardSubType}}
+            </div>
             <img
               src="https://img.icons8.com/ios-filled/50/ffffff/sim-card-chip.png"
               alt="Chip"
@@ -331,16 +622,11 @@
       <!-- Action Button -->
       <button
         type="button"
+        (click)="handleApplyModal()"
         class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
       >
         Apply for
-        {{
-          hasCards
-            ? userCards.length == 1 && userCards[0].cardType == "Debit"
-              ? "Credit"
-              : "Debit"
-            : ""
-        }}
+        {{ getCardType() }}
         Card
       </button>
     </div>
