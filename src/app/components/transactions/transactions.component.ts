@@ -4,17 +4,25 @@ import { Transaction } from '../../model/transaction';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import {
   ApexNonAxisChartSeries,
   ApexResponsive,
   ApexChart,
-  NgApexchartsModule, 
+  NgApexchartsModule,
   ChartComponent,
   ApexDataLabels,
   ApexXAxis,
   ApexPlotOptions,
-  ApexYAxis
+  ApexYAxis,
 } from 'ng-apexcharts';
 import { CreditDebitRequest } from '../../model/credit-debit';
 import { TransferRequest } from '../../model/transfer-request';
@@ -32,19 +40,25 @@ export type BarChartOptions = {
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
   xaxis: ApexXAxis;
-  yaxis:ApexYAxis;
+  yaxis: ApexYAxis;
 };
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [NgFor, NgIf,NgClass,ReactiveFormsModule, FormsModule, NgApexchartsModule],
+  imports: [
+    NgFor,
+    NgIf,
+    NgClass,
+    ReactiveFormsModule,
+    FormsModule,
+    NgApexchartsModule,
+  ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.css',
 })
 export class TransactionsComponent implements OnInit {
-  
-  showTransactionModal:boolean = false;
+  showTransactionModal: boolean = false;
   transactions: Transaction[] = [];
   currentPage: number = 1; // The current page
   itemsPerPage: number = 6; // Items per page
@@ -54,50 +68,59 @@ export class TransactionsComponent implements OnInit {
   payments: number = 0;
   deposits: number = 0;
   withdrawals: number = 0;
-  selectedOption!:string;
-  creditDebitDto:CreditDebitRequest = new CreditDebitRequest();
-  transferDto:TransferRequest = new TransferRequest();
+  selectedOption!: string;
+  creditDebitDto: CreditDebitRequest = new CreditDebitRequest();
+  transferDto: TransferRequest = new TransferRequest();
   filteredTransactions: any[] = [];
-  transactionForm!:FormGroup;
-  
+  transactionForm!: FormGroup;
+
   @ViewChild('chart') chart!: ChartComponent;
-  public chartOptions!: Partial<ChartOptions>; 
-  public chartOptionsDate!: Partial<ChartOptions>; 
-  public chartOptionsAmount!: Partial<ChartOptions>; 
-  
-  
+  public chartOptions!: Partial<ChartOptions>;
+  public chartOptionsDate!: Partial<ChartOptions>;
+  public chartOptionsAmount!: Partial<ChartOptions>;
+
   constructor(
     private userService: UserService,
     private alertService: AlertService,
     private router: Router,
-    private formBuilder:FormBuilder
+    private formBuilder: FormBuilder
   ) {
     this.transactionForm = this.formBuilder.group({
-      amount:['',[Validators.required]],
-      destinationAccountNumber:[''],
-      transactionType:['',[Validators.required]]
+      amount: ['', [Validators.required]],
+      destinationAccountNumber: [''],
+      transactionType: ['', [Validators.required]],
     });
-   
-    this.transactionForm.get('transactionType')?.valueChanges.subscribe((value) => {
-      const recipientControl = this.transactionForm.get('destinationAccountNumber');
-      this.selectedOption = value;
-      if (value === 'Transfer') {
-        recipientControl?.setValidators([Validators.required,this.accountNumberValidator,Validators.minLength(12),Validators.maxLength(12)]);
-      } else {
-        recipientControl?.clearValidators();
-      }
-      recipientControl?.updateValueAndValidity(); // Recalculate the validation status
-    });
+
+    this.transactionForm
+      .get('transactionType')
+      ?.valueChanges.subscribe((value) => {
+        const recipientControl = this.transactionForm.get(
+          'destinationAccountNumber'
+        );
+        this.selectedOption = value;
+        if (value === 'Transfer') {
+          recipientControl?.setValidators([
+            Validators.required,
+            this.accountNumberValidator,
+            Validators.minLength(12),
+            Validators.maxLength(12),
+          ]);
+        } else {
+          recipientControl?.clearValidators();
+        }
+        recipientControl?.updateValueAndValidity(); // Recalculate the validation status
+      });
   }
 
   accountNumberValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value || '';
 
     const errors: ValidationErrors = {};
-    
+
     // Rule 1: First 2 characters should be letters
     if (!/^[A-Za-z]{2}/.test(value)) {
-      errors['noLetterStarting'] = 'First two letters of the account number should be alphabets';
+      errors['noLetterStarting'] =
+        'First two letters of the account number should be alphabets';
     }
 
     // Rule 2: 10 digits
@@ -105,12 +128,10 @@ export class TransactionsComponent implements OnInit {
       errors['noTenDigit'] = 'Account number must contain 10 digits';
     }
 
-
     return Object.keys(errors).length ? errors : null;
   }
 
   ngOnInit(): void {
-
     this.userService
       .fetchTransactions(localStorage.getItem('accountNumber') ?? '')
       .subscribe(
@@ -120,49 +141,71 @@ export class TransactionsComponent implements OnInit {
           this.filteredTransactions = [...this.transactions];
           const quarterCounts: { [key: string]: number } = {
             Q1: 0, // January - March
-            AQ1:0,
+            AQ1: 0,
             Q2: 0, // April - June
-            AQ2:0,
+            AQ2: 0,
             Q3: 0, // July - September
-            AQ3:0,
+            AQ3: 0,
             Q4: 0, // October - December
-            AQ4:0,
-
+            AQ4: 0,
           };
-          this.transactions.forEach((transaction)=>{
-            if(transaction.transactionType==='Deposit'){
+          this.transactions.forEach((transaction) => {
+            if (transaction.transactionType === 'Deposit') {
               this.deposits += transaction.amount ?? 0;
-            } else if(transaction.transactionType==='Payment'){
+            } else if (transaction.transactionType === 'Payment') {
               this.payments += transaction.amount ?? 0;
-            } else if(transaction.transactionType === 'Transfer'){
+            } else if (transaction.transactionType === 'Transfer') {
               this.transfers += transaction.amount ?? 0;
-            } else if(transaction.transactionType === 'Withdrawal'){
+            } else if (transaction.transactionType === 'Withdrawal') {
               this.withdrawals += transaction.amount ?? 0;
             }
 
-            
-
-            const date = new Date(transaction.createdAt??'');
+            const date = new Date(transaction.createdAt ?? '');
             const month = date.getMonth() + 1; // JavaScript months are 0-indexed
 
             // Determine the quarter
             if (month >= 1 && month <= 3) {
               quarterCounts['Q1']++;
-              quarterCounts['AQ1'] = quarterCounts['AQ1'] + ((transaction.transactionType==='Withdrawal' || transaction.transactionType==='Transfer') ? transaction.amount ?? 0:0);
+              quarterCounts['AQ1'] =
+                quarterCounts['AQ1'] +
+                (transaction.transactionType === 'Withdrawal' ||
+                transaction.transactionType === 'Transfer'
+                  ? transaction.amount ?? 0
+                  : 0);
             } else if (month >= 4 && month <= 6) {
               quarterCounts['Q2']++;
-              quarterCounts['AQ2'] = quarterCounts['AQ2'] + ((transaction.transactionType==='Withdrawal' || transaction.transactionType==='Transfer') ? transaction.amount ?? 0:0);
+              quarterCounts['AQ2'] =
+                quarterCounts['AQ2'] +
+                (transaction.transactionType === 'Withdrawal' ||
+                transaction.transactionType === 'Transfer'
+                  ? transaction.amount ?? 0
+                  : 0);
             } else if (month >= 7 && month <= 9) {
               quarterCounts['Q3']++;
-              quarterCounts['AQ3'] = quarterCounts['AQ3'] + ((transaction.transactionType==='Withdrawal' || transaction.transactionType==='Transfer') ? transaction.amount ?? 0:0);
+              quarterCounts['AQ3'] =
+                quarterCounts['AQ3'] +
+                (transaction.transactionType === 'Withdrawal' ||
+                transaction.transactionType === 'Transfer'
+                  ? transaction.amount ?? 0
+                  : 0);
             } else if (month >= 10 && month <= 12) {
               quarterCounts['Q4']++;
-              quarterCounts['AQ4'] = quarterCounts['AQ4'] + ((transaction.transactionType==='Withdrawal' || transaction.transactionType==='Transfer') ? transaction.amount ?? 0:0);
+              quarterCounts['AQ4'] =
+                quarterCounts['AQ4'] +
+                (transaction.transactionType === 'Withdrawal' ||
+                transaction.transactionType === 'Transfer'
+                  ? transaction.amount ?? 0
+                  : 0);
             }
-          })
+          });
 
-          this.chartOptionsDate = {  
-            series: [quarterCounts['Q1'], quarterCounts['Q2'], quarterCounts['Q3'], quarterCounts['Q4']],
+          this.chartOptionsDate = {
+            series: [
+              quarterCounts['Q1'],
+              quarterCounts['Q2'],
+              quarterCounts['Q3'],
+              quarterCounts['Q4'],
+            ],
             chart: {
               type: 'donut',
               dropShadow: {
@@ -170,8 +213,8 @@ export class TransactionsComponent implements OnInit {
                 top: 0,
                 left: 0,
                 blur: 5,
-                opacity: 0.6
-              }
+                opacity: 0.6,
+              },
             },
             labels: ['Jan-March', 'April-June', 'July-Sep', 'October-Dec'],
             responsive: [
@@ -189,8 +232,13 @@ export class TransactionsComponent implements OnInit {
             ],
           };
 
-          this.chartOptions = {  
-            series: [this.deposits, this.payments, this.transfers, this.withdrawals],
+          this.chartOptions = {
+            series: [
+              this.deposits,
+              this.payments,
+              this.transfers,
+              this.withdrawals,
+            ],
             chart: {
               type: 'donut',
               dropShadow: {
@@ -198,8 +246,8 @@ export class TransactionsComponent implements OnInit {
                 top: 0,
                 left: 0,
                 blur: 5,
-                opacity: 0.6
-              }
+                opacity: 0.6,
+              },
             },
             labels: ['Deposits', 'Payments', 'Transfers', 'Withdrawals'],
             responsive: [
@@ -217,8 +265,13 @@ export class TransactionsComponent implements OnInit {
             ],
           };
 
-          this.chartOptionsAmount = {  
-            series: [quarterCounts['AQ1'], quarterCounts['AQ2'], quarterCounts['AQ3'], quarterCounts['AQ4']],
+          this.chartOptionsAmount = {
+            series: [
+              quarterCounts['AQ1'],
+              quarterCounts['AQ2'],
+              quarterCounts['AQ3'],
+              quarterCounts['AQ4'],
+            ],
             chart: {
               type: 'donut',
               dropShadow: {
@@ -226,8 +279,8 @@ export class TransactionsComponent implements OnInit {
                 top: 0,
                 left: 0,
                 blur: 5,
-                opacity: 0.6
-              }
+                opacity: 0.6,
+              },
             },
             labels: ['Jan-March', 'April-June', 'July-Sep', 'October-Dec'],
             responsive: [
@@ -244,7 +297,6 @@ export class TransactionsComponent implements OnInit {
               },
             ],
           };
-     
         },
         (error) => {
           if (error.status === 403) {
@@ -253,6 +305,7 @@ export class TransactionsComponent implements OnInit {
             localStorage.removeItem('role');
             localStorage.removeItem('accountNumber');
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('name');
             this.alertService.showAlert(
               'You have been logged out. Please login again.',
               'info'
@@ -261,7 +314,6 @@ export class TransactionsComponent implements OnInit {
           }
         }
       );
-      
   }
 
   getDate(inputDate: string) {
@@ -297,6 +349,7 @@ export class TransactionsComponent implements OnInit {
           localStorage.removeItem('role');
           localStorage.removeItem('accountNumber');
           localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('name');
           this.alertService.showAlert(
             'You have been logged out. Please login again.',
             'info'
@@ -319,7 +372,7 @@ export class TransactionsComponent implements OnInit {
 
   // Method to handle page change
   setPage(page: number) {
-    this.currentPage = page;  
+    this.currentPage = page;
   }
 
   // Handle previous page
@@ -347,7 +400,10 @@ export class TransactionsComponent implements OnInit {
   // filter funtionality
   get filteredTransactionsList(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredTransactions.slice(startIndex, startIndex + this.itemsPerPage);
+    return this.filteredTransactions.slice(
+      startIndex,
+      startIndex + this.itemsPerPage
+    );
   }
 
   // Update filteredTransactions when the search term changes
@@ -370,119 +426,144 @@ export class TransactionsComponent implements OnInit {
     this.currentPage = 1; // Reset to first page when search is updated
   }
 
-  onSubmit(){
-    if(this.transactionForm.valid){
-      
-      if(this.transactionForm.get('transactionType')?.value==='Transfer'){
-        this.transferDto.sourceAccountNumber = localStorage.getItem('accountNumber') ?? '';
-        this.transferDto.destinationAccountNumber = this.transactionForm.get('destinationAccountNumber')?.value;
+  onSubmit() {
+    if (this.transactionForm.valid) {
+      if (this.transactionForm.get('transactionType')?.value === 'Transfer') {
+        this.transferDto.sourceAccountNumber =
+          localStorage.getItem('accountNumber') ?? '';
+        this.transferDto.destinationAccountNumber = this.transactionForm.get(
+          'destinationAccountNumber'
+        )?.value;
         this.transferDto.amount = this.transactionForm.get('amount')?.value;
-        
-        this.userService.transferTransaction(this.transferDto).subscribe((response)=>{          
-          if(response.responseCode===200){
-            this.alertService.showAlert(response.responseMessage,'success');
-          } else {
-            this.alertService.showAlert(response.responseMessage,'error');
+
+        this.userService.transferTransaction(this.transferDto).subscribe(
+          (response) => {
+            if (response.responseCode === 200) {
+              this.alertService.showAlert(response.responseMessage, 'success');
+            } else {
+              this.alertService.showAlert(response.responseMessage, 'error');
+            }
+            this.showTransactionModal = !this.showTransactionModal;
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          },
+          (error) => {
+            if (error.status === 403) {
+              localStorage.removeItem('token');
+              localStorage.removeItem('username');
+              localStorage.removeItem('role');
+              localStorage.removeItem('accountNumber');
+              localStorage.removeItem('isLoggedIn');
+              localStorage.removeItem('name');
+              this.alertService.showAlert(
+                'You have been logged out. Please login again.',
+                'info'
+              );
+              this.router.navigate(['/login']);
+            }
           }
-          this.showTransactionModal=!this.showTransactionModal
-          setTimeout(() => {
-            window.location.reload()
-            
-          }, 3000);
-        },
-        (error) => {
-          if (error.status === 403) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('username');
-            localStorage.removeItem('role');
-            localStorage.removeItem('accountNumber');
-            localStorage.removeItem('isLoggedIn');
-            this.alertService.showAlert(
-              'You have been logged out. Please login again.',
-              'info'
-            );
-            this.router.navigate(['/login']);
-          }
-        })
-      } else if(this.transactionForm.get('transactionType')?.value==='Credit'){
-        this.creditDebitDto.accountNumber = localStorage.getItem('accountNumber') ?? '';
+        );
+      } else if (
+        this.transactionForm.get('transactionType')?.value === 'Credit'
+      ) {
+        this.creditDebitDto.accountNumber =
+          localStorage.getItem('accountNumber') ?? '';
         this.creditDebitDto.amount = this.transactionForm.get('amount')?.value;
 
-        this.userService.creditTransaction(this.creditDebitDto).subscribe((response)=>{
-          if(response.responseCode===200){
-            this.alertService.showAlert(response.responseMessage,'success');
-          } else {
-            this.alertService.showAlert(response.responseMessage,'error');
+        this.userService.creditTransaction(this.creditDebitDto).subscribe(
+          (response) => {
+            if (response.responseCode === 200) {
+              this.alertService.showAlert(response.responseMessage, 'success');
+            } else {
+              this.alertService.showAlert(response.responseMessage, 'error');
+            }
+            this.showTransactionModal = !this.showTransactionModal;
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          },
+          (error) => {
+            if (error.status === 403) {
+              localStorage.removeItem('token');
+              localStorage.removeItem('username');
+              localStorage.removeItem('role');
+              localStorage.removeItem('accountNumber');
+              localStorage.removeItem('isLoggedIn');
+              localStorage.removeItem('name');
+              this.alertService.showAlert(
+                'You have been logged out. Please login again.',
+                'info'
+              );
+              this.router.navigate(['/login']);
+            }
           }
-          this.showTransactionModal=!this.showTransactionModal
-          
-          setTimeout(() => {
-            window.location.reload()
-            
-          }, 3000);
-        },
-        (error) => {
-          if (error.status === 403) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('username');
-            localStorage.removeItem('role');
-            localStorage.removeItem('accountNumber');
-            localStorage.removeItem('isLoggedIn');
-            this.alertService.showAlert(
-              'You have been logged out. Please login again.',
-              'info'
-            );
-            this.router.navigate(['/login']);
-          }
-        })
+        );
       } else {
-        this.creditDebitDto.accountNumber = localStorage.getItem('accountNumber') ?? '';
+        this.creditDebitDto.accountNumber =
+          localStorage.getItem('accountNumber') ?? '';
         this.creditDebitDto.amount = this.transactionForm.get('amount')?.value;
 
-        this.userService.debitTransaction(this.creditDebitDto).subscribe((response)=>{
-          if(response.responseCode===200){
-            this.alertService.showAlert(response.responseMessage,'success');
-          } else {
-            this.alertService.showAlert(response.responseMessage,'error');
+        this.userService.debitTransaction(this.creditDebitDto).subscribe(
+          (response) => {
+            if (response.responseCode === 200) {
+              this.alertService.showAlert(response.responseMessage, 'success');
+            } else {
+              this.alertService.showAlert(response.responseMessage, 'error');
+            }
+            this.showTransactionModal = !this.showTransactionModal;
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          },
+          (error) => {
+            if (error.status === 403) {
+              localStorage.removeItem('token');
+              localStorage.removeItem('username');
+              localStorage.removeItem('role');
+              localStorage.removeItem('accountNumber');
+              localStorage.removeItem('isLoggedIn');
+              localStorage.removeItem('name');
+              this.alertService.showAlert(
+                'You have been logged out. Please login again.',
+                'info'
+              );
+              this.router.navigate(['/login']);
+            }
           }
-          this.showTransactionModal=!this.showTransactionModal
-          setTimeout(() => {
-            window.location.reload()
-          }, 3000);
-        },
-        (error) => {
-          if (error.status === 403) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('username');
-            localStorage.removeItem('role');
-            localStorage.removeItem('accountNumber');
-            localStorage.removeItem('isLoggedIn');
-            this.alertService.showAlert(
-              'You have been logged out. Please login again.',
-              'info'
-            );
-            this.router.navigate(['/login']);
-          }
-        })
+        );
       }
     }
   }
 
   allowOnlyNumbers(event: KeyboardEvent): void {
-    const allowedKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'];
+    const allowedKeys = [
+      'Backspace',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab',
+      'Delete',
+    ];
     if (!/^[0-9]$/.test(event.key) && !allowedKeys.includes(event.key)) {
       event.preventDefault();
     }
   }
 
   allowOnlyAlphanumeric(event: KeyboardEvent): void {
-    const allowedKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'];
+    const allowedKeys = [
+      'Backspace',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab',
+      'Delete',
+    ];
     if (!/^[a-zA-Z0-9]$/.test(event.key) && !allowedKeys.includes(event.key)) {
       event.preventDefault();
     }
   }
 
-  toggleTransactionModal(){
+  toggleTransactionModal() {
     this.showTransactionModal = !this.showTransactionModal;
   }
 }

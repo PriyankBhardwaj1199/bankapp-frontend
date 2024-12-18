@@ -1,6 +1,12 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 import { BankstatementService } from '../../services/bankstatement.service';
@@ -10,18 +16,17 @@ import { BankStatementDto } from '../../model/bank-statement-dto';
 @Component({
   selector: 'app-bankstatement',
   standalone: true,
-  imports: [NgFor,NgIf,NgClass,FormsModule,ReactiveFormsModule],
+  imports: [NgFor, NgIf, NgClass, FormsModule, ReactiveFormsModule],
   templateUrl: './bankstatement.component.html',
   styleUrl: './bankstatement.component.css',
 })
 export class BankstatementComponent implements OnInit {
-
   searchTerm!: string;
   showStatementModal: boolean = false;
   statements: BankStatement[] = [];
   filteredStatements: BankStatement[] = [];
-  generateStatementForm!:FormGroup;
-  bankStatementDto:BankStatementDto = new BankStatementDto();
+  generateStatementForm!: FormGroup;
+  bankStatementDto: BankStatementDto = new BankStatementDto();
 
   currentPage: number = 1; // The current page
   itemsPerPage: number = 6; // Items per page
@@ -35,32 +40,36 @@ export class BankstatementComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.generateStatementForm = this.formBuilder.group({
-      startDate:['',[Validators.required]],
-      endDate:['',[Validators.required]],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
     });
   }
 
   ngOnInit(): void {
     this.bankStatementService
       .getStatementsByAccountNumber(localStorage.getItem('accountNumber') ?? '')
-      .subscribe((response) => {
-        this.statements = response;
-        this.filteredStatements = [...this.statements];
-        this.totalItems = response.length;
-      },(error) => {
-        if (error.status === 403) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('username');
-          localStorage.removeItem('role');
-          localStorage.removeItem('accountNumber');
-          localStorage.removeItem('isLoggedIn');
-          this.alertService.showAlert(
-            'You have been logged out. Please login again.',
-            'info'
-          );
-          this.router.navigate(['/login']);
+      .subscribe(
+        (response) => {
+          this.statements = response;
+          this.filteredStatements = [...this.statements];
+          this.totalItems = response.length;
+        },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('name');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+            this.router.navigate(['/login']);
+          }
         }
-      });
+      );
   }
 
   getDate(inputDate: string) {
@@ -78,77 +87,100 @@ export class BankstatementComponent implements OnInit {
   }
 
   handleDelete(id: number) {
-    this.bankStatementService.deleteStatement(localStorage.getItem('accountNumber')??'',id).subscribe((response)=>{
-      this.alertService.showAlert(response.responseMessage,'success');
-      setTimeout(() => {
-        window.location.reload()
-      }, 3000);
-    },(error) => {
-      if (error.status === 403) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('role');
-        localStorage.removeItem('accountNumber');
-        localStorage.removeItem('isLoggedIn');
-        this.alertService.showAlert(
-          'You have been logged out. Please login again.',
-          'info'
-        );
-        this.router.navigate(['/login']);
-      }
-    })
+    this.bankStatementService
+      .deleteStatement(localStorage.getItem('accountNumber') ?? '', id)
+      .subscribe(
+        (response) => {
+          this.alertService.showAlert(response.responseMessage, 'success');
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+            this.router.navigate(['/login']);
+          }
+        }
+      );
   }
 
   handleDownload(id: any) {
-    this.bankStatementService.downloadStatement(localStorage.getItem('accountNumber')??'',id).subscribe((response:Blob)=>{
-      const url = window.URL.createObjectURL(response);
-      const a = document.createElement('a');
-      a.target = '_blank';
-      a.href = url;
-      a.click();
-      window.URL.revokeObjectURL(url);
-    },(error) => {
-      if (error.status === 403) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('role');
-        localStorage.removeItem('accountNumber');
-        localStorage.removeItem('isLoggedIn');
-        this.alertService.showAlert(
-          'You have been logged out. Please login again.',
-          'info'
-        );
-        this.router.navigate(['/login']);
-      }
-    })
+    this.bankStatementService
+      .downloadStatement(localStorage.getItem('accountNumber') ?? '', id)
+      .subscribe(
+        (response: Blob) => {
+          const url = window.URL.createObjectURL(response);
+          const a = document.createElement('a');
+          a.target = '_blank';
+          a.href = url;
+          a.click();
+          window.URL.revokeObjectURL(url);
+        },
+        (error) => {
+          if (error.status === 403) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            localStorage.removeItem('accountNumber');
+            localStorage.removeItem('isLoggedIn');
+            this.alertService.showAlert(
+              'You have been logged out. Please login again.',
+              'info'
+            );
+            this.router.navigate(['/login']);
+          }
+        }
+      );
   }
 
   onSubmit() {
-    if(this.generateStatementForm.valid){
-      this.bankStatementDto.accountNumber = localStorage.getItem('accountNumber')??'';
-      this.bankStatementDto.startDate = this.generateStatementForm.get('startDate')?.value;
-      this.bankStatementDto.endDate = this.generateStatementForm.get('endDate')?.value;
+    if (this.generateStatementForm.valid) {
+      this.bankStatementDto.accountNumber =
+        localStorage.getItem('accountNumber') ?? '';
+      this.bankStatementDto.startDate =
+        this.generateStatementForm.get('startDate')?.value;
+      this.bankStatementDto.endDate =
+        this.generateStatementForm.get('endDate')?.value;
 
-      this.bankStatementService.generateStatement(this.bankStatementDto).subscribe((response)=>{
-        if(response.responseCode===200){
-          this.alertService.showAlert(response.responseMessage,'success');
-        } else if(response.responseCode===404){
-          this.alertService.showAlert(response.responseMessage,'error');
-        }
-      },(error) => {
-        if (error.status === 403) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('username');
-          localStorage.removeItem('role');
-          localStorage.removeItem('accountNumber');
-          localStorage.removeItem('isLoggedIn');
-          this.alertService.showAlert(
-            'You have been logged out. Please login again.',
-            'info'
-          );
-          this.router.navigate(['/login']);
-        }
-      })
+      this.bankStatementService
+        .generateStatement(this.bankStatementDto)
+        .subscribe(
+          (response) => {
+            if (response.responseCode === 200) {
+              this.alertService.showAlert(response.responseMessage, 'success');
+            } else if (response.responseCode === 404) {
+              this.alertService.showAlert(response.responseMessage, 'error');
+            }
+
+            setTimeout(() => {
+              window.location.reload()
+            }, 3000);
+          },
+          (error) => {
+            if (error.status === 403) {
+              localStorage.removeItem('token');
+              localStorage.removeItem('username');
+              localStorage.removeItem('role');
+              localStorage.removeItem('accountNumber');
+              localStorage.removeItem('isLoggedIn');
+              localStorage.removeItem('name');
+              this.alertService.showAlert(
+                'You have been logged out. Please login again.',
+                'info'
+              );
+              this.router.navigate(['/login']);
+            }
+          }
+        );
     }
   }
 
@@ -241,6 +273,4 @@ export class BankstatementComponent implements OnInit {
   toggleTransactionModal() {
     this.showStatementModal = !this.showStatementModal;
   }
-
- 
 }

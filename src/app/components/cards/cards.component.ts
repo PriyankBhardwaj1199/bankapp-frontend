@@ -52,9 +52,9 @@ export class CardsComponent implements OnInit {
     });
 
     this.applyCardForm = formBuilder.group({
-      cardType:['',[Validators.required]],
-      cardSubType:['',[Validators.required]]
-    })
+      cardType: ['', [Validators.required]],
+      cardSubType: ['', [Validators.required]],
+    });
   }
 
   ngOnInit(): void {
@@ -176,6 +176,7 @@ export class CardsComponent implements OnInit {
           localStorage.removeItem('role');
           localStorage.removeItem('accountNumber');
           localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('name');
           this.alertService.showAlert(
             'You have been logged out. Please login again.',
             'info'
@@ -215,6 +216,7 @@ export class CardsComponent implements OnInit {
           localStorage.removeItem('role');
           localStorage.removeItem('accountNumber');
           localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('name');
           this.alertService.showAlert(
             'You have been logged out. Please login again.',
             'info'
@@ -230,7 +232,7 @@ export class CardsComponent implements OnInit {
     if (this.generatePinForm.valid) {
       const pinGroup = this.generatePinForm.get('pin') as FormGroup;
       const pin = Object.values(pinGroup.value).join('');
-      console.log(pin)
+      console.log(pin);
       this.cardRequest.accountNumber =
         localStorage.getItem('accountNumber') ?? '';
       this.cardRequest.cardNumber = card.cardNumber;
@@ -258,6 +260,7 @@ export class CardsComponent implements OnInit {
             localStorage.removeItem('role');
             localStorage.removeItem('accountNumber');
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('name');
             this.alertService.showAlert(
               'You have been logged out. Please login again.',
               'info'
@@ -269,14 +272,15 @@ export class CardsComponent implements OnInit {
       );
     }
   }
-  
+
   applyCard() {
     if (this.applyCardForm.valid) {
-      
       this.cardRequest.accountNumber =
         localStorage.getItem('accountNumber') ?? '';
+      this.cardRequest.name = localStorage.getItem('name') ?? '';
       this.cardRequest.cardType = this.applyCardForm.get('cardType')?.value;
-      this.cardRequest.cardSubType = this.applyCardForm.get('cardSubType')?.value;
+      this.cardRequest.cardSubType =
+        this.applyCardForm.get('cardSubType')?.value;
       this.cardsService.applyCard(this.cardRequest).subscribe(
         (response) => {
           if (response.responseCode === 200) {
@@ -300,6 +304,7 @@ export class CardsComponent implements OnInit {
             localStorage.removeItem('role');
             localStorage.removeItem('accountNumber');
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('name');
             this.alertService.showAlert(
               'You have been logged out. Please login again.',
               'info'
@@ -339,6 +344,7 @@ export class CardsComponent implements OnInit {
           localStorage.removeItem('role');
           localStorage.removeItem('accountNumber');
           localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('name');
           this.alertService.showAlert(
             'You have been logged out. Please login again.',
             'info'
@@ -358,12 +364,12 @@ export class CardsComponent implements OnInit {
       this.selectedCard = new Cards();
     }
   }
-  
+
   toggleApplyModal(card: string | null) {
     this.showApplyModal = !this.showApplyModal;
     this.appliedCard = card;
     if (this.showApplyModal && card !== null) {
-      this.applyCardForm.patchValue({cardType:card,cardSubType:''});
+      this.applyCardForm.patchValue({ cardType: card, cardSubType: '' });
     }
   }
 
@@ -402,10 +408,10 @@ export class CardsComponent implements OnInit {
         ? 'Credit'
         : 'Debit'
       : null;
-  
+
     this.toggleApplyModal(cardType);
   }
-  
+
   getCardType(): string {
     if (!this.hasCards) {
       return '';

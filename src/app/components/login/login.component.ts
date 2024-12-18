@@ -52,6 +52,7 @@ export class LoginComponent {
           localStorage.setItem('username',response?.['jwtResponse'].userName);
           localStorage.setItem('role',response?.['jwtResponse'].roles);
           localStorage.setItem('accountNumber',response?.['jwtResponse'].accountNumber);
+          localStorage.setItem('name',response?.['jwtResponse'].name);
           localStorage.setItem('isLoggedIn','true');
 
           this.alertService.showAlert(response.responseMessage,'success');

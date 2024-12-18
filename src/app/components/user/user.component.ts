@@ -19,7 +19,7 @@ import { BankstatementService } from '../../services/bankstatement.service';
 import { BankStatement } from '../../model/bank-statement';
 import { AlertService } from '../../services/alert.service';
 import { UserDto } from '../../model/userdto';
-import { TransferFilterPipe } from "../../pipes/transfer-filter.pipe";
+import { TransferFilterPipe } from '../../pipes/transfer-filter.pipe';
 
 @Component({
   selector: 'app-user',
@@ -135,6 +135,7 @@ export class UserComponent {
           localStorage.removeItem('role');
           localStorage.removeItem('accountNumber');
           localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('name');
           this.alertService.showAlert(
             'You have been logged out. Please login again.',
             'info'
@@ -166,6 +167,7 @@ export class UserComponent {
             localStorage.removeItem('role');
             localStorage.removeItem('accountNumber');
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('name');
             this.alertService.showAlert(
               'You have been logged out. Please login again.',
               'info'
@@ -189,6 +191,7 @@ export class UserComponent {
             localStorage.removeItem('role');
             localStorage.removeItem('accountNumber');
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('name');
             this.alertService.showAlert(
               'You have been logged out. Please login again.',
               'info'
@@ -212,6 +215,7 @@ export class UserComponent {
             localStorage.removeItem('role');
             localStorage.removeItem('accountNumber');
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('name');
             this.alertService.showAlert(
               'You have been logged out. Please login again.',
               'info'
@@ -299,29 +303,33 @@ export class UserComponent {
       this.userDto.middleName = this.updateForm.get('middleName')?.value;
       this.userDto.email = this.updateForm.get('email')?.value;
       this.userDto.city = this.updateForm.get('city')?.value;
-      this.userDto.country = Country.getCountryByCode(this.updateForm.get('country')?.value)?.name;
+      this.userDto.country = Country.getCountryByCode(
+        this.updateForm.get('country')?.value
+      )?.name;
       this.userDto.stateOfOrigin = this.updateForm.get('stateOfOrigin')?.value;
       this.userDto.addressLine1 = this.updateForm.get('addressLine1')?.value;
       this.userDto.addressLine2 = this.updateForm.get('addressLine2')?.value;
       this.userDto.gender = this.updateForm.get('gender')?.value;
       this.userDto.pinCode = this.updateForm.get('pinCode')?.value;
       this.userDto.phoneNumber = this.updateForm.get('phoneNumber')?.value;
-      this.userDto.alternativePhoneNumber = this.updateForm.get('alternativePhoneNumber')?.value;
+      this.userDto.alternativePhoneNumber = this.updateForm.get(
+        'alternativePhoneNumber'
+      )?.value;
 
-      this.userService.updateUser(this.userDto).subscribe((response)=>{
-        if(response.responseCode===200){
-            this.alertService.showAlert(response.responseMessage,'success');
-          } else if(response.responseCode===404){
-            this.alertService.showAlert(response.responseMessage,'info');
-          } else if(response.responseCode===500){
-            this.alertService.showAlert(response.responseMessage,'error');
+      this.userService.updateUser(this.userDto).subscribe(
+        (response) => {
+          if (response.responseCode === 200) {
+            this.alertService.showAlert(response.responseMessage, 'success');
+          } else if (response.responseCode === 404) {
+            this.alertService.showAlert(response.responseMessage, 'info');
+          } else if (response.responseCode === 500) {
+            this.alertService.showAlert(response.responseMessage, 'error');
           }
           this.showUpdateModal = false;
           setTimeout(() => {
             window.location.reload();
-            
           }, 2000);
-      },
+        },
         (error) => {
           if (error.status === 403) {
             localStorage.removeItem('token');
@@ -329,6 +337,7 @@ export class UserComponent {
             localStorage.removeItem('role');
             localStorage.removeItem('accountNumber');
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('name');
             this.alertService.showAlert(
               'You have been logged out. Please login again.',
               'info'
@@ -336,7 +345,8 @@ export class UserComponent {
 
             this.router.navigate(['/login']);
           }
-        })
+        }
+      );
     }
   }
 
