@@ -61,7 +61,7 @@
                   class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600"
                 >
                   <span class="font-medium text-gray-900 dark:text-gray-300"
-                    >PB</span
+                    >{{initials}}</span
                   >
                 </div>
               </button>
@@ -72,38 +72,23 @@
               >
                 <div class="px-4 py-3" role="none">
                   <p class="text-sm text-gray-900 dark:text-white" role="none">
-                    Neil Sims
+                    {{name}}
                   </p>
                   <p
                     class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                     role="none"
                   >
-                    neil.simsflowbite.com
+                    {{email}}
                   </p>
                 </div>
                 <ul class="py-1" role="none">
                   <li>
                     <a
-                      href="#"
+                      [routerLink]="role === 'USER' ? '/dashboard/user-dashboard':'/dashboard/admin-dashboard'"
+                      (click)="role === 'USER' ? onMenuItemSelect('UserDashboard') : onMenuItemSelect('AdminDashboard')"
                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                       role="menuitem"
                       >Dashboard</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                      role="menuitem"
-                      >Settings</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                      role="menuitem"
-                      >Earnings</a
                     >
                   </li>
                   <li (click)="toggleModal()">
@@ -329,6 +314,29 @@
               />
             </svg>
             <span class="flex-1 ms-3 whitespace-nowrap">Cards</span>
+          </a>
+        </li>
+        <li *ngIf="role==='ADMIN'" (click)="onMenuItemSelect('Manage-Cards')">
+          <a
+            routerLink="/dashboard/manage-cards"
+            routerLinkActive="bg-gray-300 dark:bg-gray-700 hover:bg-gray-300"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+          >
+            <svg
+              class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 18"
+            >
+              <path
+                d="M18 0H6a2 2 0 0 0-2 2h14v12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Z"
+              />
+              <path
+                d="M14 4H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM2 16v-6h12v6H2Z"
+              />
+            </svg>
+            <span class="flex-1 ms-3 whitespace-nowrap">Manage Cards</span>
           </a>
         </li>
         <li (click)="toggleModal()">

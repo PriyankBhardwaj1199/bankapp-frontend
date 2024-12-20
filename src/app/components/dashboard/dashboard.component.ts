@@ -21,10 +21,13 @@ export class DashboardComponent {
   constructor(private breadcrumbService: BreadcrumService, private router: Router,private alertService:AlertService) {}
 
   showUserDropDown: boolean = false;
-  role: string = localStorage.getItem('role') ?? 'USER';
+  role:string = localStorage.getItem('role') ?? 'USER';
+  name:string = localStorage.getItem('name') ?? '';
+  email:string = localStorage.getItem('username') ?? '';
+  initials:string = (localStorage.getItem('accountNumber') ?? '').slice(0,2); 
 
   ngOnInit() {
-    this.breadcrumbService.setInitalBreadcrum()
+    this.breadcrumbService.setInitalBreadcrum();
     this.breadcrumbs$ = this.breadcrumbService.getBreadcrumbs();
   }
 
@@ -64,6 +67,11 @@ export class DashboardComponent {
         this.breadcrumbService.clearBreadcrumbs();
         this.breadcrumbService.addBreadcrumb({ label: 'Cards', url: '/dashboard/cards' });
         this.router.navigate(['/dashboard/cards']);
+        break;
+      case 'Manage-Cards':
+        this.breadcrumbService.clearBreadcrumbs();
+        this.breadcrumbService.addBreadcrumb({ label: 'Manage Cards', url: '/dashboard/manage-cards' });
+        this.router.navigate(['/dashboard/manage-cards']);
         break;
     }
   }

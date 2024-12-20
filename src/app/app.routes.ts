@@ -12,6 +12,7 @@ import { BankstatementComponent } from './components/bankstatement/bankstatement
 import { CardsComponent } from './components/cards/cards.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { authGuard } from './gaurds/auth.guard';
+import { ManageCardsComponent } from './components/manage-cards/manage-cards.component';
 
 
 export const routes: Routes = [
@@ -30,7 +31,8 @@ export const routes: Routes = [
             { path: 'accounts', component: AccountsComponent,canActivate: [authGuard] },
             { path: 'transactions', component: TransactionsComponent,canActivate: [authGuard] },
             { path: 'bankstatement', component: BankstatementComponent,canActivate: [authGuard] },
-            { path: 'cards', component: CardsComponent,canActivate: [authGuard] }
+            { path: 'cards', component: CardsComponent,canActivate: [authGuard] },
+            { path: 'manage-cards', component: ManageCardsComponent,canActivate: [authGuard] }
           ]
     },
 

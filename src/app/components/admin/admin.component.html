@@ -1,23 +1,176 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+<!-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
   <div
-    class="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"
+    class="flex flex-col justify-start items-center gap-3 p-4 border-2 border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"
   >
-    <p class="text-center text-white">ADMIN</p>
+    <h1
+      class="mb-2 text-lg uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      Total accounts
+    </h1>
+    <p
+      class="mb-2 text-2xl uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      73M+
+    </p>
+    <h1
+      class="mb-2 text-lg uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      Total active accounts
+    </h1>
+    <p
+      class="mb-2 text-2xl uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      73M+
+    </p>
   </div>
   <div
-    class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"
-  ></div>
+    class="flex flex-col justify-start items-center gap-3 p-4 border-2 border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"
+  >
+    <h1
+      class="mb-2 text-xl uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      Total accounts
+    </h1>
+    <p
+      class="mb-2 text-2xl uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      73M+
+    </p>
+  </div>
   <div
-    class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"
-  ></div>
+    class="flex flex-col justify-start items-center gap-3 p-4 border-2 border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"
+  >
+    <h1
+      class="mb-2 text-xl uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      Total accounts
+    </h1>
+    <p
+      class="mb-2 text-2xl uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      73M+
+    </p>
+  </div>
   <div
-    class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"
-  ></div>
-</div>
+    class="flex flex-col justify-start items-center gap-3 p-4 border-2 border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"
+  >
+    <h1
+      class="mb-2 text-xl uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      Total accounts
+    </h1>
+    <p
+      class="mb-2 text-2xl uppercase text-slate-800 dark:text-slate-200 font-extrabold"
+    >
+      73M+
+    </p>
+  </div>
+</div> -->
 <div
-  class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"
-></div>
-<div class="grid grid-cols-2 gap-4 mb-4">
+  class="rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"
+>
+<div class="bg-gray-100 dark:bg-gray-900 p-6 h-80">
+  <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Overview</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Card 1: Total Users -->
+    <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center">
+      <div class="flex-shrink-0 bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300 rounded-full p-3">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 4a2 2 0 11-4 0 2 2 0 014 0zm-6 8a6 6 0 1112 0H4z"></path>
+        </svg>
+      </div>
+      <div class="ml-4">
+        <p class="text-gray-600 dark:text-gray-400 text-sm">Total Users</p>
+        <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{statistics.totalUsers}}</p>
+      </div>
+    </div>
+
+    <!-- Card 2: Active Users -->
+    <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center">
+      <div class="flex-shrink-0 bg-green-100 dark:bg-green-800 text-green-600 dark:text-green-300 rounded-full p-3">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 4a2 2 0 11-4 0 2 2 0 014 0zm-6 8a6 6 0 1112 0H4z"></path>
+        </svg>
+      </div>
+      <div class="ml-4">
+        <p class="text-gray-600 dark:text-gray-400 text-sm">Active Users</p>
+        <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{statistics.activeUsers}}</p>
+      </div>
+    </div>
+
+    <!-- Card 3: Total Transactions -->
+    <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center">
+      <div class="flex-shrink-0 bg-yellow-100 dark:bg-yellow-800 text-yellow-600 dark:text-yellow-300 rounded-full p-3">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M5 11h10v2H5v-2zm0-4h10v2H5V7z"></path>
+        </svg>
+      </div>
+      <div class="ml-4">
+        <p class="text-gray-600 dark:text-gray-400 text-sm">Total Transactions</p>
+        <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{statistics.totalTransactions}}</p>
+      </div>
+    </div>
+
+    <!-- Card 4: Pending Approvals -->
+    <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center">
+      <div class="flex-shrink-0 bg-red-100 dark:bg-red-800 text-red-600 dark:text-red-300 rounded-full p-3">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM9 5h2v5H9V5zm0 6h2v2H9v-2z"></path>
+        </svg>
+      </div>
+      <div class="ml-4">
+        <p class="text-gray-600 dark:text-gray-400 text-sm">Pending Approvals</p>
+        <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{(statistics.pendingCardApprovals+statistics.pendingCardApprovals)}}</p>
+      </div>
+    </div>
+
+    <!-- Card 5: Active Debit Cards -->
+    <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center">
+      <div class="flex-shrink-0 bg-purple-100 dark:bg-purple-800 text-purple-600 dark:text-purple-300 rounded-full p-3">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M3 5h14a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1zm2 2v6h10V7H5z"></path>
+        </svg>
+      </div>
+      <div class="ml-4">
+        <p class="text-gray-600 dark:text-gray-400 text-sm">Active Debit Cards</p>
+        <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{statistics.activeDebitCards}}</p>
+      </div>
+    </div>
+
+    <!-- Card 6: Active Credit Cards -->
+    <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center">
+      <div class="flex-shrink-0 bg-indigo-100 dark:bg-indigo-800 text-indigo-600 dark:text-indigo-300 rounded-full p-3">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M3 5h14a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1zm2 2v6h10V7H5z"></path>
+        </svg>
+      </div>
+      <div class="ml-4">
+        <p class="text-gray-600 dark:text-gray-400 text-sm">Active Credit Cards</p>
+        <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{statistics.activeCreditCards}}</p>
+      </div>
+    </div>
+
+    <!-- Card 7: Bank Statements Generated -->
+    <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center">
+      <div class="flex-shrink-0 bg-teal-100 dark:bg-teal-800 text-teal-600 dark:text-teal-300 rounded-full p-3">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M4 3h12v14H4V3zm2 2v10h8V5H6z"></path>
+        </svg>
+      </div>
+      <div class="ml-4">
+        <p class="text-gray-600 dark:text-gray-400 text-sm">Bank Statements Generated</p>
+        <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{statistics.totalBankStatements}}</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+</div>
+<!-- <div class="grid grid-cols-2 gap-4 mb-4">
   <div
     class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
   ></div>
@@ -47,4 +200,4 @@
   <div
     class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
   ></div>
-</div>
+</div> -->

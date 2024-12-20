@@ -40,6 +40,16 @@ export class BreadcrumService {
           { label: 'Bank Statement', url: '/dashboard/bankstatement' },
         ];
         break;
+        case '/dashboard/accounts':
+        this.breadcrumbs = [
+          { label: 'Accounts', url: '/dashboard/accounts' },
+        ];
+        break;
+        case '/dashboard/manage-cards':
+        this.breadcrumbs = [
+          { label: 'Manage Cards', url: '/dashboard/manage-cards' },
+        ];
+        break;
     }
     this.breadcrumbSubject.next(this.breadcrumbs);
   }

@@ -77,6 +77,7 @@ export class CardsComponent implements OnInit {
             localStorage.removeItem('role');
             localStorage.removeItem('accountNumber');
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('name');
             this.alertService.showAlert(
               'You have been logged out. Please login again.',
               'info'
@@ -150,42 +151,6 @@ export class CardsComponent implements OnInit {
 
   toggleActionDropdown(index: number) {
     this.showActionDropdown[index] = !this.showActionDropdown[index];
-  }
-
-  revokeCard(card: Cards) {
-    this.cardRequest.accountNumber =
-      localStorage.getItem('accountNumber') ?? '';
-    this.cardRequest.cardNumber = card.cardNumber;
-    this.cardsService.revokeCard(this.cardRequest).subscribe(
-      (response) => {
-        if (response.responseCode === 200) {
-          this.alertService.showAlert(response.responseMessage, 'success');
-        } else if (
-          response.responseCode === 404 ||
-          response.responseCode === 409
-        ) {
-          this.alertService.showAlert(response.responseMessage, 'info');
-        } else {
-          this.alertService.showAlert(response.responseMessage, 'error');
-        }
-      },
-      (error) => {
-        if (error.status === 403) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('username');
-          localStorage.removeItem('role');
-          localStorage.removeItem('accountNumber');
-          localStorage.removeItem('isLoggedIn');
-          localStorage.removeItem('name');
-          this.alertService.showAlert(
-            'You have been logged out. Please login again.',
-            'info'
-          );
-
-          this.router.navigate(['/login']);
-        }
-      }
-    );
   }
 
   blockCard(card: Cards) {

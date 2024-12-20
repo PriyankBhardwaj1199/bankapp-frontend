@@ -255,7 +255,6 @@ export class UserComponent {
   }
 
   onMenuItemSelect(menu: string) {
-    console.log(this.breadcrumbs$);
     switch (menu) {
       case 'Transactions':
         this.breadcrumbService.clearBreadcrumbs();
