@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { BankResponse } from '../model/bank-response';
 import { Statistics } from '../model/statistics';
 import { CardRequest } from '../model/card-request';
@@ -14,10 +14,14 @@ export class AdminService {
 
   private apiUrl = 'http://localhost:8080/api/admin/';
 
+  private data$!: Observable<Statistics>;
+
   constructor(private http: HttpClient) {}
 
   getStatistics():Observable<Statistics>{
-    return this.http.get<Statistics>(this.apiUrl+'statistics');
+    this.data$ =  this.http.get<Statistics>(this.apiUrl+'statistics').pipe(shareReplay(1));
+
+    return this.data$;
   }
 
   cardAction(cardRequest:CardRequest,action:String):Observable<BankResponse>{

@@ -493,7 +493,7 @@
     >
       <div class="w-full">
         <h1 class="text-2xl font-semibold text-gray-700 dark:text-white mb-2">
-          {{ greeting }}, {{user.firstName + ' '+user.lastName}}
+          {{ greeting }}, {{user.firstName ?? '' + ' '+user.lastName}}
         </h1>
       </div>
 

@@ -6,6 +6,7 @@ import { Cards } from '../../model/cards';
 import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
 import { CardRequest } from '../../model/card-request';
+import { Statistics } from '../../model/statistics';
 
 @Component({
   selector: 'app-manage-cards',
@@ -15,6 +16,8 @@ import { CardRequest } from '../../model/card-request';
   styleUrl: './manage-cards.component.css'
 })
 export class ManageCardsComponent implements OnInit{
+
+  statistics!:Statistics;
 
   userCards: Cards[] = [];
   pendingApprovalCards: Cards[] = [];
@@ -61,6 +64,26 @@ export class ManageCardsComponent implements OnInit{
           }
         }
       );
+
+      this.adminService.getStatistics().subscribe((response)=>{
+        this.statistics=response;
+      },
+      (error) => {
+        if (error.status === 403) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('username');
+          localStorage.removeItem('role');
+          localStorage.removeItem('accountNumber');
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('name');
+          this.alertService.showAlert(
+            'You have been logged out. Please login again.',
+            'info'
+          );
+  
+          this.router.navigate(['/login']);
+        }
+      })
   }
 
   getDate(inputDate: string) {
@@ -115,7 +138,7 @@ export class ManageCardsComponent implements OnInit{
   }
 
   get totalPages(): number {
-    return Math.ceil(this.totalItemsUser / this.itemsPerPageUser);
+    return Math.ceil(this.totalItems / this.itemsPerPage);
   }
 
   // Get the transactions to display for the current page

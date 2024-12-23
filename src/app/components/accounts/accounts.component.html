@@ -1,99 +1,392 @@
-<div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-400">
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-       <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-       </svg>
-    </p>
- </div>
+<div class="rounded-lg border-gray-300 dark:border-gray-600 h-auto mb-4">
+  <div class="bg-gray-100 dark:bg-gray-900 p-6 h-auto">
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+      Overview
+    </h1>
 
-<div class="grid grid-cols-3 gap-4 mb-4">
-    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div
+        class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center"
+      >
+        <div
+          class="flex-shrink-0 bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300 rounded-full p-3"
+        >
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M13 7a3 3 0 11-6 0 3 3 0 016 0zm2 8a5 5 0 00-10 0H2a8 8 0 0116 0h-3z"
+            ></path>
           </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+        </div>
+        <div class="ml-4">
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Total Users</p>
+          <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {{ statistics.totalUsers}}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center"
+      >
+        <div
+          class="flex-shrink-0 bg-green-100 dark:bg-green-800 text-green-600 dark:text-green-300 rounded-full p-3"
+        >
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M9 16.2l-3.5-3.5-1.4 1.4 4.9 4.9 9-9-1.4-1.4z" />
           </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+        </div>
+        <div class="ml-4">
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Active Users</p>
+          <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {{ statistics.activeUsers }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center"
+      >
+        <div
+          class="flex-shrink-0 bg-yellow-100 dark:bg-yellow-800 text-yellow-600 dark:text-yellow-300 rounded-full p-3"
+        >
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M5 11h10v2H5v-2zm0-4h10v2H5V7z"></path>
           </svg>
-       </p>
+        </div>
+        <div class="ml-4">
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            In-Active Users
+          </p>
+          <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {{ statistics.inactiveUsers }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center"
+      >
+        <div
+          class="flex-shrink-0 bg-cyan-100 dark:bg-cyan-800 text-cyan-600 dark:text-cyan-300 rounded-full p-3"
+        >
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M9 12h2v2H9v-2zM10 2a6 6 0 00-6 6v2h12V8a6 6 0 00-6-6zm-1 8V8h2v2H9z"
+            ></path>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            Suspended Users
+          </p>
+          <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {{ statistics.suspendedUsers }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center"
+      >
+        <div
+          class="flex-shrink-0 bg-amber-100 dark:bg-amber-800 text-amber-600 dark:text-amber-300 rounded-full p-3"
+        >
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M6 9V7a4 4 0 118 0v2a2 2 0 01-2 2H8a2 2 0 01-2-2zm8 2a2 2 0 002 2v3H4v-3a2 2 0 002-2h8z"
+            ></path>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            Closed Accounts
+          </p>
+          <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {{ statistics.closedAccounts }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center"
+      >
+        <div
+          class="flex-shrink-0 bg-teal-100 dark:bg-teal-800 text-teal-600 dark:text-teal-300 rounded-full p-3"
+        >
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 5v6h2V7H9z"></path>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            Deactivated Accounts
+          </p>
+          <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {{ statistics.deactivatedAccounts }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center"
+      >
+        <div
+          class="flex-shrink-0 bg-purple-100 dark:bg-purple-800 text-purple-600 dark:text-purple-300 rounded-full p-3"
+        >
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M6 2a2 2 0 00-2 2v2a4 4 0 001 2.7V12a4 4 0 01-1 2.7V18a2 2 0 002 2h8a2 2 0 002-2v-1.3a4 4 0 01-1-2.7V8.7a4 4 0 001-2.7V4a2 2 0 00-2-2H6zm2 2h4v2H8V4zm-2 8a2 2 0 114 0v2a2 2 0 11-4 0v-2z"
+            ></path>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            Pending Account Approvals
+          </p>
+          <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {{ statistics.pendingAccountApprovals }}
+          </p>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
- <div class="grid grid-cols-2 gap-4 mb-4">
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
+<div
+  *ngIf="users.length > 0"
+  class="mt-4 h-auto mb-4 rounded bg-gray-50 dark:bg-transparent"
+>
+  <div
+    class="w-full bg-white dark:bg-gray-900 relative shadow-md sm:rounded-lg overflow-hidden"
+  >
+    <div
+      class="max-h-96 overflow-hidden scrollbar-thin dark:scrollbar-thumb-gray-500 dark:scrollbar-track-gray-900 sm:rounded-lg"
+    >
+      <table class="w-full text-sm text-left text-gray-700 dark:text-gray-400">
+        <thead
+          class="top-0 text-xs z-[500] text-gray-700 uppercase bg-gray-50 dark:bg-gray-600 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-4 py-3">Name</th>
+            <th scope="col" class="px-4 py-3">Account Number</th>
+            <th scope="col" class="px-4 py-3 z-[0]">Email</th>
+            <th scope="col" class="px-4 py-3 z-[0]">Address</th>
+            <th scope="col" class="px-4 py-3 z-[0]">Phone Number</th>
+            <th scope="col" class="px-4 py-3 z-[0]">Alternative Phone Number</th>
+            <th scope="col" class="px-4 py-3">Account Balance</th>
+            <th scope="col" class="px-4 py-3 z-[0]">Status</th>
+            <th scope="col" class="px-4 py-3 z-[0]">
+              <span class="sr-only">Actions</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let user of currentUsers; let i = index"
+            class="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            <td class="px-4 py-3">{{ user.firstName + ' '+ user.middleName + ' ' + user.lastName }}</td>
+            <td class="px-4 py-3">{{ user.accountNumber }}</td>
+            <td class="px-4 py-3">{{ user.email }}</td>
+            <td class="px-4 py-3">{{ user.addressLine1 + ' '+ user.addressLine2 + ' '+ user.city + ' '+ user.pinCode + ' ' + user.stateOfOrigin + ' ' + user.country}}</td>
+            <td class="px-4 py-3">{{ user.phoneNumber }}</td>
+            <td class="px-4 py-3">{{ user.alternativePhoneNumber }}</td>
+            <td class="px-4 py-3">{{ user.accountBalance }}</td>
+            <td class="px-4 py-3">{{ user.status }}</td>
+            <td class="px-4 py-3">
+              <button
+                (click)="toggleActionDropdown(i)"
+                id="apple-iphone-14-dropdown-button"
+                data-dropdown-toggle="apple-iphone-14-dropdown"
+                class="relative inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                type="button"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewbox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+                  />
+                </svg>
+              </button>
+              <div
+                *ngIf="showActionDropdown[i]"
+                id="apple-iphone-14-dropdown"
+                class="absolute right-1 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+              >
+                <ul
+                  class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                  aria-labelledby="apple-iphone-14-dropdown-button"
+                >
+                  <!-- <li
+                    *ngIf="
+                      card.cardStatus !== 'BLOCKED' &&
+                      card.cardStatus !== 'REQUESTED' &&
+                      card.cardStatus === 'INACTIVE'
+                    "
+                  >
+                    <button
+                      (click)="approveCard(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Activate
+                    </button>
+                  </li>
+                  <li *ngIf="card.cardStatus === 'REQUESTED'">
+                    <button
+                      (click)="approveCard(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Approve Card
+                    </button>
+                  </li>
+                  <li
+                    *ngIf="
+                      card.cardStatus !== 'BLOCKED' &&
+                      card.cardStatus !== 'REQUESTED'
+                    "
+                  >
+                    <button
+                      (click)="blockCard(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Block
+                    </button>
+                  </li>
+                  <li
+                    *ngIf="
+                      card.cardStatus !== 'BLOCKED' &&
+                      card.cardStatus !== 'INACTIVE' &&
+                      card.cardStatus !== 'REQUESTED'
+                    "
+                  >
+                    <button
+                      (click)="deactivateCard(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      De-Activate
+                    </button>
+                  </li>
+                  <li *ngIf="card.cardStatus !== 'REQUESTED'">
+                    <button
+                      (click)="deleteCard(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Delete
+                    </button>
+                  </li>
+                  <li
+                    *ngIf="
+                      card.cardStatus !== 'REVOKED' &&
+                      card.cardStatus !== 'REQUESTED'
+                    "
+                  >
+                    <button
+                      (click)="revokeCard(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Revoke
+                    </button>
+                  </li>
+                  <li *ngIf="card.cardStatus === 'BLOCKED'">
+                    <button
+                      (click)="unblockCard(card); toggleActionDropdown(i)"
+                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Un-Block
+                    </button>
+                  </li> -->
+                </ul>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="users.length === 0">
+            <td class="px-4 py-3 text-center" colspan="9">
+              No Users Found.
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
- </div>
- <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-400">
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-       <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-       </svg>
-    </p>
- </div>
- <div class="grid grid-cols-2 gap-4">
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-400">
-       <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-       </p>
-    </div>
- </div>
+    <nav
+      class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
+      aria-label="Table navigation"
+    >
+      <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+        Showing
+        <span class="font-semibold text-gray-900 dark:text-white"
+          >{{ rangeStart }}-{{ rangeEnd }}</span
+        >
+        of
+        <span class="font-semibold text-gray-900 dark:text-white">{{
+          totalItems
+        }}</span>
+      </span>
+      <ul class="inline-flex items-stretch -space-x-px">
+        <!-- Previous Button -->
+        <li>
+          <span
+            (click)="prevPage()"
+            class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            <span class="sr-only">Previous</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </li>
+
+        <!-- Page Buttons -->
+        <li *ngFor="let page of [].constructor(totalPages); let i = index">
+          <span
+            (click)="setPage(i + 1)"
+            [class]="
+              currentPage === i + 1
+                ? 'flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-white bg-blue-700 border border-blue-700 hover:bg-blue-600 dark:border-gray-700 dark:bg-gray-700 dark:text-white'
+                : 'flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+            "
+          >
+            {{ i + 1 }}
+          </span>
+        </li>
+
+        <!-- Next Button -->
+        <li>
+          <span
+            (click)="nextPage()"
+            class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            <span class="sr-only">Next</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
