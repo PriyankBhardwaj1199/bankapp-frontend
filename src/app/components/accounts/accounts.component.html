@@ -157,10 +157,10 @@
   class="mt-4 h-auto mb-4 rounded bg-gray-50 dark:bg-transparent"
 >
   <div
-    class="w-full bg-white dark:bg-gray-900 relative shadow-md sm:rounded-lg overflow-hidden"
+    class="w-full bg-white dark:bg-gray-900 relative shadow-md sm:rounded-lg overflow-visible"
   >
     <div
-      class="max-h-96 overflow-hidden scrollbar-thin dark:scrollbar-thumb-gray-500 dark:scrollbar-track-gray-900 sm:rounded-lg"
+      class="max-h-96 overflow-visible scrollbar-thin dark:scrollbar-thumb-gray-500 dark:scrollbar-track-gray-900 sm:rounded-lg"
     >
       <table class="w-full text-sm text-left text-gray-700 dark:text-gray-400">
         <thead
@@ -216,64 +216,41 @@
               <div
                 *ngIf="showActionDropdown[i]"
                 id="apple-iphone-14-dropdown"
-                class="absolute right-1 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                class="absolute right-1 z-[999] h-auto overflow-visible w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
               >
                 <ul
                   class="py-1 text-sm text-gray-700 dark:text-gray-200"
                   aria-labelledby="apple-iphone-14-dropdown-button"
                 >
-                  <!-- <li
+                  <li
                     *ngIf="
-                      card.cardStatus !== 'BLOCKED' &&
-                      card.cardStatus !== 'REQUESTED' &&
-                      card.cardStatus === 'INACTIVE'
+                      user.status !== 'ACTIVE'
                     "
                   >
                     <button
-                      (click)="approveCard(card); toggleActionDropdown(i)"
+                      (click)="approveAccount(user); toggleActionDropdown(i)"
                       class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       Activate
                     </button>
                   </li>
-                  <li *ngIf="card.cardStatus === 'REQUESTED'">
-                    <button
-                      (click)="approveCard(card); toggleActionDropdown(i)"
-                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
-                      Approve Card
-                    </button>
-                  </li>
                   <li
                     *ngIf="
-                      card.cardStatus !== 'BLOCKED' &&
-                      card.cardStatus !== 'REQUESTED'
+                      user.status !== 'CLOSED' &&
+                      user.status !== 'SUSPENDED' &&
+                      user.status !== 'INACTIVE'
                     "
                   >
                     <button
-                      (click)="blockCard(card); toggleActionDropdown(i)"
-                      class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
-                      Block
-                    </button>
-                  </li>
-                  <li
-                    *ngIf="
-                      card.cardStatus !== 'BLOCKED' &&
-                      card.cardStatus !== 'INACTIVE' &&
-                      card.cardStatus !== 'REQUESTED'
-                    "
-                  >
-                    <button
-                      (click)="deactivateCard(card); toggleActionDropdown(i)"
+                      (click)="deActivateAccount(user); toggleActionDropdown(i)"
                       class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       De-Activate
                     </button>
                   </li>
-                  <li *ngIf="card.cardStatus !== 'REQUESTED'">
+                  <li>
                     <button
-                      (click)="deleteCard(card); toggleActionDropdown(i)"
+                      (click)="deleteAccount(user); toggleActionDropdown(i)"
                       class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       Delete
@@ -281,25 +258,29 @@
                   </li>
                   <li
                     *ngIf="
-                      card.cardStatus !== 'REVOKED' &&
-                      card.cardStatus !== 'REQUESTED'
+                      user.status !== 'CLOSED' &&
+                      user.status !== 'SUSPENDED' &&
+                      user.status !== 'DEACTIVATED'
                     "
                   >
                     <button
-                      (click)="revokeCard(card); toggleActionDropdown(i)"
+                      (click)="suspendAccount(user); toggleActionDropdown(i)"
                       class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      Revoke
+                      Suspend
                     </button>
                   </li>
-                  <li *ngIf="card.cardStatus === 'BLOCKED'">
+                  <li
+                    *ngIf="
+                      user.status !== 'CLOSED'"
+                  >
                     <button
-                      (click)="unblockCard(card); toggleActionDropdown(i)"
+                      (click)="closeAccount(user); toggleActionDropdown(i)"
                       class="block w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      Un-Block
+                      Close
                     </button>
-                  </li> -->
+                  </li>
                 </ul>
               </div>
             </td>

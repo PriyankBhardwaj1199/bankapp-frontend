@@ -175,10 +175,22 @@ export class ManageCardsComponent implements OnInit{
   }
 
   toggleActionDropdown(index: number) {
-    this.showActionDropdown[index] = !this.showActionDropdown[index];
+    this.showActionDropdown.forEach((_,i)=>{
+      if(i===index){
+        this.showActionDropdown[index] = !this.showActionDropdown[index];
+      } else {
+        this.showActionDropdown[i] = false;
+      }
+    })
   }
   toggleActionDropdownUserCards(index: number) {
-    this.showActionDropdownUserCards[index] = !this.showActionDropdownUserCards[index];
+    this.showActionDropdownUserCards.forEach((_,i)=>{
+      if(i===index){
+        this.showActionDropdownUserCards[index] = !this.showActionDropdownUserCards[index];
+      } else {
+        this.showActionDropdownUserCards[i] = false;
+      }
+    })
   }
 
   revokeCard(card: Cards) {

@@ -150,7 +150,13 @@ export class CardsComponent implements OnInit {
   }
 
   toggleActionDropdown(index: number) {
-    this.showActionDropdown[index] = !this.showActionDropdown[index];
+    this.showActionDropdown.forEach((_,i)=>{
+      if(i===index){
+        this.showActionDropdown[index] = !this.showActionDropdown[index];
+      } else {
+        this.showActionDropdown[i] = false;
+      }
+    })
   }
 
   blockCard(card: Cards) {

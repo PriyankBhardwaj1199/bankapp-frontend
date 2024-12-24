@@ -121,7 +121,7 @@
       </div>
       <div class="ml-4">
         <p class="text-gray-600 dark:text-gray-400 text-sm">Pending Approvals</p>
-        <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{(statistics.pendingCardApprovals+statistics.pendingCardApprovals)}}</p>
+        <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{(statistics.pendingCardApprovals+statistics.pendingAccountApprovals)}}</p>
       </div>
     </div>
 
@@ -167,7 +167,48 @@
   </div>
 </div>
 
-
+<div class="grid grid-cols-3 gap-4 mt-12">
+  <!-- Left Column -->
+  <div
+    class="col-span-3 flex flex-col items-center justify-start rounded bg-gray-50 h-72 dark:bg-gray-900"
+  >
+    <!-- Heading -->
+    <h5
+      class="mt-2 mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-700 md:text-2xl dark:text-gray-200"
+    >
+      Statistics
+    </h5>
+    <!-- Chart -->
+    <div class="w-full flex justify-center">
+      <apx-chart
+        *ngIf="chartOptions"
+        [series]="chartOptions.series ?? []"
+        [chart]="chartOptions.chart ?? { type: 'donut' }"
+        [labels]="chartOptions.labels"
+        [responsive]="chartOptions.responsive ?? []"
+      ></apx-chart>
+      <apx-chart
+        *ngIf="chartOptionsCards"
+        [series]="chartOptionsCards.series ?? []"
+        [chart]="chartOptionsCards.chart ?? { type: 'donut' }"
+        [labels]="chartOptionsCards.labels"
+        [responsive]="chartOptionsCards.responsive ?? []"
+      ></apx-chart>
+      <apx-chart
+        *ngIf="chartOptionsApprovals"
+        [series]="chartOptionsApprovals.series ?? []"
+        [chart]="chartOptionsApprovals.chart ?? { type: 'donut' }"
+        [labels]="chartOptionsApprovals.labels"
+        [responsive]="chartOptionsApprovals.responsive ?? []"
+      ></apx-chart>
+    </div>
+    <div class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+      <p>
+        (a) Account distribution (b) Card Distribution (c) Pending Approvals
+      </p>
+    </div>
+  </div>
+</div>
 
 </div>
 <!-- <div class="grid grid-cols-2 gap-4 mb-4">

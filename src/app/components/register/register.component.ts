@@ -4,6 +4,10 @@ import { NgIf,NgFor, NgClass } from '@angular/common';
 import { Country, State } from 'country-state-city';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { passwordMatchValidator } from '../../utility/custom-validator';
+import { UserService } from '../../services/user.service';
+import { UserDto } from '../../model/userdto';
+import { Router } from '@angular/router';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-register',
@@ -24,9 +28,11 @@ export class RegisterComponent {
   showAlert=false;
   showAlertConfirm=false;
 
+  userDto:UserDto = new UserDto();
+
   showPassword: boolean = false; // Variable to track the checkbox state
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private userService:UserService,private router:Router,private alertService:AlertService) {
     this.registerForm = this.formBuilder.group({
         firstName:['',[Validators.required]],
         middleName:['',],
@@ -67,9 +73,7 @@ export class RegisterComponent {
   ngOnInit(): void {
     // Fetch all countries
     this.countries = Country.getAllCountries();
-    // this.registerForm.get('confirmPassword')?.valueChanges.subscribe(() => {
-    //   console.log(this.registerForm?.hasError('passwordMismatch'))
-    // });
+ 
   }
 
   togglePassword(): void {
@@ -78,7 +82,59 @@ export class RegisterComponent {
 
   onSubmit(){
     if(this.registerForm?.valid){
-      console.log(this.registerForm.value)
+      this.userDto.firstName = this.registerForm.get('firstName')?.value;
+      this.userDto.middleName = this.registerForm.get('middleName')?.value;
+      this.userDto.lastName = this.registerForm.get('lastName')?.value;
+      this.userDto.gender = this.registerForm.get('gender')?.value;
+      this.userDto.addressLine1 = this.registerForm.get('addressLine1')?.value;
+      this.userDto.addressLine2 = this.registerForm.get('addressLine2')?.value;
+      this.userDto.city = this.registerForm.get('city')?.value;
+      this.userDto.pinCode = this.registerForm.get('pinCode')?.value;
+      this.userDto.stateOfOrigin = this.registerForm.get('stateOfOrigin')?.value;
+      this.userDto.country = Country.getCountryByCode(
+        this.registerForm.get('country')?.value
+      )?.name;
+      this.userDto.email = this.registerForm.get('email')?.value;
+      this.userDto.phoneNumber = this.registerForm.get('phoneNumber')?.value;
+      this.userDto.alternativePhoneNumber = this.registerForm.get('alternativePhoneNumber')?.value;
+      this.userDto.role = this.registerForm.get('role')?.value;
+      this.userDto.password = this.registerForm.get('password')?.value;
+
+      this.userService.registerUser(this.userDto).subscribe((response)=>{
+        if (response.responseCode === 200) {
+          this.alertService.showAlert(response.responseMessage, 'success');
+        } else if (
+          response.responseCode === 404 ||
+          response.responseCode === 409
+        ) {
+          this.alertService.showAlert(response.responseMessage, 'info');
+        } else {
+          this.alertService.showAlert(response.responseMessage, 'error');
+        }
+
+        setTimeout(() => {
+          this.alertService.showAlert('You will now be redirected to login page','info')
+        }, 2500);
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 3500);
+      },
+      (error) => {
+        if (error.status === 403) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('username');
+          localStorage.removeItem('role');
+          localStorage.removeItem('accountNumber');
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('name');
+          this.alertService.showAlert(
+            'You have been logged out. Please login again.',
+            'info'
+          );
+
+          this.router.navigate(['/home']);
+        }
+      })
     }
   }
 

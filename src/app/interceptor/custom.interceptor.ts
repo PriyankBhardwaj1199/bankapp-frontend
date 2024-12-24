@@ -4,7 +4,7 @@ export const customInterceptor: HttpInterceptorFn = (req, next) => {
   
   const token = localStorage.getItem('token');
 
-  if(req.url.includes('http://localhost:8080/api/user/login')||req.url.includes('http://localhost:8080/api/user/register')){
+  if(req.url.includes('http://localhost:8080/api/user/login')||req.url.includes('http://localhost:8080/api/user/create')){
       return next(req);
   }
 

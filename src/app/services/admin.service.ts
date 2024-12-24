@@ -6,6 +6,7 @@ import { Statistics } from '../model/statistics';
 import { CardRequest } from '../model/card-request';
 import { Cards } from '../model/cards';
 import { User } from '../model/user';
+import { FetchAccount } from '../model/fetch-account';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class AdminService {
 
   cardAction(cardRequest:CardRequest,action:String):Observable<BankResponse>{
     return this.http.post<BankResponse>(this.apiUrl+"card/action/"+action,cardRequest);
+  }
+  
+  accountAction(fetchAccount:FetchAccount,action:String):Observable<BankResponse>{
+    return this.http.post<BankResponse>(this.apiUrl+"account/action/"+action,fetchAccount);
   }
 
   getAllCards():Observable<Cards[]>{

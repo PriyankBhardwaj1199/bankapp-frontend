@@ -86,6 +86,7 @@ export class DashboardComponent {
     localStorage.removeItem('role');
     localStorage.removeItem('accountNumber');
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('name');
     this.alertService.showAlert('You have been logged out successfully.','success');
     this.router.navigate(['/home']);
   }
